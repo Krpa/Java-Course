@@ -1,0 +1,11 @@
+filename i"${jmbag}-dz1.zip"
+format zip {
+ exists dir "homework04"
+ !exists dir "homework04/bin"
+ def src "homework04/src/main/java"
+ exists dir "${src}"
+ def dir1 "${src}:hr.fer.zemris.java.tecaj.hw5.problem1a"
+ terminate
+}
+fail @"Datoteka koju ste uploadali nije dozvoljenog formata."
+terminate

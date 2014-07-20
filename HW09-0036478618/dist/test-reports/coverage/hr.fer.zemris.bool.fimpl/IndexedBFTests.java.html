@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IndexedBFTests.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool.fimpl</a> &gt; <span class="el_source">IndexedBFTests.java</span></div><h1>IndexedBFTests.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool.fimpl;
+
+import hr.fer.zemris.bool.BooleanFunction;
+import hr.fer.zemris.bool.BooleanValue;
+import hr.fer.zemris.bool.BooleanVariable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * Tests for {@link IndexedBF}
+ * @author Ivan Krpelnik
+ *
+ */
+<span class="fc" id="L20">public class IndexedBFTests {</span>
+	
+	@Test
+	public void IndexedBFtest1() {
+<span class="fc" id="L24">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L25">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L26">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L27">		List&lt;Integer&gt; minterms = Arrays.asList(0, 1, 5, 7);</span>
+<span class="fc" id="L28">		List&lt;Integer&gt; maxterms = Arrays.asList(4, 6);</span>
+<span class="fc" id="L29">		List&lt;Integer&gt; dontCares = Arrays.asList(2, 3);</span>
+<span class="fc" id="L30">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC), 
+		true,
+		minterms,
+		dontCares
+		);
+<span class="fc" id="L37">		int j = 0;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		for(Integer i : f1.mintermIterable()) {</span>
+<span class="fc" id="L39">			assertEquals(minterms.get(j), i);</span>
+<span class="fc" id="L40">			j++;</span>
+<span class="fc" id="L41">		}</span>
+<span class="fc" id="L42">		j = 0;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for(Integer i : f1.maxtermIterable()) {</span>
+<span class="fc" id="L44">			assertEquals(maxterms.get(j), i);</span>
+<span class="fc" id="L45">			j++;</span>
+<span class="fc" id="L46">		}</span>
+<span class="fc" id="L47">		j = 0;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for(Integer i : f1.dontcareIterable()) {</span>
+<span class="fc" id="L49">			assertEquals(dontCares.get(j), i);</span>
+<span class="fc" id="L50">			j++;</span>
+<span class="fc" id="L51">		}</span>
+<span class="fc" id="L52">		assertEquals(true, f1.hasMinterm(0));</span>
+<span class="fc" id="L53">		assertEquals(false, f1.hasMinterm(2));</span>
+<span class="fc" id="L54">		assertEquals(true, f1.hasMaxterm(4));</span>
+<span class="fc" id="L55">		assertEquals(false, f1.hasMaxterm(3));</span>
+<span class="fc" id="L56">		assertEquals(true, f1.hasDontCare(2));</span>
+<span class="fc" id="L57">		assertEquals(false, f1.hasDontCare(5));</span>
+<span class="fc" id="L58">		assertEquals(BooleanValue.TRUE, f1.getValue());	</span>
+<span class="fc" id="L59">		varB.setValue(BooleanValue.TRUE);</span>
+<span class="fc" id="L60">		System.out.println(f1.getValue());</span>
+<span class="fc" id="L61">	}</span>
+	
+	@Test
+	public void IndexedBFtest2() {
+<span class="fc" id="L65">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L66">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L67">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L68">		List&lt;Integer&gt; maxterms = Arrays.asList(0, 1, 5, 7);</span>
+<span class="fc" id="L69">		List&lt;Integer&gt; minterms = Arrays.asList(4, 6);</span>
+<span class="fc" id="L70">		List&lt;Integer&gt; dontCares = Arrays.asList(2, 3);</span>
+<span class="fc" id="L71">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC), 
+		false,
+		maxterms,
+		dontCares
+		);
+<span class="fc" id="L78">		int j = 0;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		for(Integer i : f1.mintermIterable()) {</span>
+<span class="fc" id="L80">			assertEquals(minterms.get(j), i);</span>
+<span class="fc" id="L81">			j++;</span>
+<span class="fc" id="L82">		}</span>
+<span class="fc" id="L83">		j = 0;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for(Integer i : f1.maxtermIterable()) {</span>
+<span class="fc" id="L85">			assertEquals(maxterms.get(j), i);</span>
+<span class="fc" id="L86">			j++;</span>
+<span class="fc" id="L87">		}</span>
+<span class="fc" id="L88">		j = 0;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for(Integer i : f1.dontcareIterable()) {</span>
+<span class="fc" id="L90">			assertEquals(dontCares.get(j), i);</span>
+<span class="fc" id="L91">			j++;</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">		assertEquals(true, f1.hasMaxterm(0));</span>
+<span class="fc" id="L94">		assertEquals(false, f1.hasMaxterm(2));</span>
+<span class="fc" id="L95">		assertEquals(true, f1.hasMinterm(4));</span>
+<span class="fc" id="L96">		assertEquals(false, f1.hasMinterm(3));</span>
+<span class="fc" id="L97">		assertEquals(true, f1.hasDontCare(2));</span>
+<span class="fc" id="L98">		assertEquals(false, f1.hasDontCare(5));</span>
+<span class="fc" id="L99">		assertEquals(BooleanValue.FALSE, f1.getValue());	</span>
+<span class="fc" id="L100">	}</span>
+	
+	@Test
+	public void IndexedBFtest3() {
+<span class="fc" id="L104">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L105">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L106">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L107">		BooleanFunction f2 = new IndexedBF(</span>
+				&quot;f2&quot;, 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList&lt;Integer&gt;(),
+				new ArrayList&lt;Integer&gt;()
+				);
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L115">			assertEquals(true, f2.hasMaxterm(i));</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L117">			assertEquals(false, f2.hasMinterm(i));</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L119">			assertEquals(false, f2.hasDontCare(i));</span>
+<span class="fc" id="L120">		assertEquals(false, f2.hasMaxterm(63));</span>
+<span class="fc" id="L121">	}</span>
+	
+	@Test
+	public void IndexedBFtest4() {
+<span class="fc" id="L125">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L126">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L127">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L128">		BooleanFunction f2 = new IndexedBF(</span>
+				&quot;f2&quot;, 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList&lt;Integer&gt;(),
+				new ArrayList&lt;Integer&gt;()
+				);
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L136">			assertEquals(true, f2.hasMaxterm(i));</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L138">			assertEquals(false, f2.hasMinterm(i));</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for(int i = 0; i &lt; 8; ++i)</span>
+<span class="fc" id="L140">			assertEquals(false, f2.hasDontCare(i));</span>
+<span class="fc" id="L141">		assertEquals(false, f2.hasMaxterm(63));</span>
+<span class="fc" id="L142">		assertEquals(BooleanValue.FALSE, f2.getValue());</span>
+<span class="fc" id="L143">	}</span>
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void IndexedBFtest5() {
+<span class="nc" id="L147">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="nc" id="L148">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="nc" id="L149">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="nc" id="L150">		new IndexedBF(</span>
+				&quot;f2&quot;, 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList&lt;Integer&gt;(10),
+				new ArrayList&lt;Integer&gt;()
+				);
+<span class="nc" id="L157">		new IndexedBF(</span>
+				&quot;f2&quot;, 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList&lt;Integer&gt;(),
+				new ArrayList&lt;Integer&gt;(10)
+				);
+<span class="nc" id="L164">		new IndexedBF(</span>
+				&quot;f2&quot;, 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList&lt;Integer&gt;(Arrays.asList(2, 3)),
+				new ArrayList&lt;Integer&gt;(Arrays.asList(2, 3))
+				);
+<span class="nc" id="L171">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

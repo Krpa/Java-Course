@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>QMCMinimizer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool.qmc</a> &gt; <span class="el_source">QMCMinimizer.java</span></div><h1>QMCMinimizer.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool.qmc;
+
+import hr.fer.zemris.bool.BooleanFunction;
+import hr.fer.zemris.bool.Mask;
+import hr.fer.zemris.bool.Masks;
+import hr.fer.zemris.bool.fimpl.MaskBasedBF;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Razred koji generira minimalne oblike funkcije koristeći  
+ * QMC metodu.
+ * Minimalni oblici se vraćaju kao niz {@link MaskBasedBF}.
+ * @author Ivan Krpelnik
+ *
+ */
+public class QMCMinimizer {
+
+	/**
+	 * privatni konstruktor
+	 */
+<span class="nc" id="L29">	private QMCMinimizer() {</span>
+<span class="nc" id="L30">	}</span>
+	
+	/**
+	 * Statička metoda koja generira niz minimalnih oblika dane funkcije.
+	 * @param bf - dana funkcija
+	 * @param getProducts - true ako treba minimizirati po makstermima, false ako treba po mintermima
+	 * @return {@link MaskBasedBF}[] - minimalni oblici
+	 */
+	public static MaskBasedBF[] minimize(BooleanFunction bf, boolean getProducts) {
+<span class="fc" id="L39">		List&lt;QMCMask&gt; maske = reduce(makeImplicants(bf, getProducts), getProducts);</span>
+<span class="fc" id="L40">		List&lt;QMCMask&gt; primary = makePrimaryImplicants(bf, maske, getProducts);</span>
+<span class="fc" id="L41">		maske.removeAll(primary);</span>
+//		for(QMCMask mask : primary) {
+//			System.out.println(mask.getMask() + &quot; : primary&quot;);
+//		}
+//		for(QMCMask mask : maske) {
+//			System.out.println(mask.getMask() + &quot; : not primary&quot;);
+//		}
+<span class="fc" id="L48">		List&lt;Mask&gt; miniMaske = extractMasks(primary);</span>
+		MaskBasedBF[] fije;
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if(isCovered(primary, bf, getProducts)) {</span>
+<span class="fc" id="L51">			fije = new MaskBasedBF[1];</span>
+<span class="fc" id="L52">			fije[0] = new MaskBasedBF(&quot;Mini&quot;, bf.getDomain(), true, miniMaske, new ArrayList&lt;Mask&gt;());</span>
+		} else {
+<span class="fc" id="L54">			List&lt;List&lt;QMCMask&gt;&gt; fromPyne = pyne(maske, indexesNotCovered(primary, bf, getProducts));</span>
+<span class="fc" id="L55">			fije = new MaskBasedBF[fromPyne.size()];</span>
+<span class="fc" id="L56">			int i = 0; </span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			for(List&lt;QMCMask&gt; lista : fromPyne) {</span>
+<span class="fc" id="L58">				List&lt;Mask&gt; temp = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">				temp.addAll(miniMaske);</span>
+<span class="fc" id="L60">				temp.addAll(extractMasks(lista));</span>
+<span class="fc" id="L61">				fije[i] = new MaskBasedBF(&quot;Fija&quot;+i, bf.getDomain(), true, temp, new ArrayList&lt;Mask&gt;());</span>
+<span class="fc" id="L62">				i++;</span>
+<span class="fc" id="L63">			}</span>
+		}			
+<span class="fc" id="L65">		return fije;</span>
+	}
+	
+	/**
+	 * Privatna metoda koja generira maske implikanata dane funkcije
+	 * @param bf - dana funkcija
+	 * @param getProducts - treba li generirati implikante po makstermima ili mintermima
+	 * @return - lista implikanata
+	 */
+	private static List&lt;QMCMask&gt; makeImplicants(BooleanFunction bf, boolean getProducts) {
+<span class="fc" id="L75">		List&lt;QMCMask&gt; maske = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L76">		int size = bf.getDomain().size();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for(int i = 0; i &lt; 1 &lt;&lt; size; ++i) {</span>
+<span class="fc bfc" id="L78" title="All 8 branches covered.">			if(bf.hasMinterm(i) &amp;&amp; !getProducts ||</span>
+					bf.hasMaxterm(i) &amp;&amp; getProducts) {
+<span class="fc" id="L80">				maske.add(new QMCMask(Masks.fromIndexes(size, i).get(0)));</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			} else if(bf.hasDontCare(i)) {</span>
+<span class="fc" id="L82">				maske.add(new QMCMask(Masks.fromIndexes(size, i).get(0), true));</span>
+			}
+		}
+<span class="fc" id="L85">		return maske;</span>
+	}
+	
+	/**
+	 * Metoda koja reducira dane maske po QMC algoritmu.
+	 * @param maske - dane maske koje treba spojiti
+	 * @param getProducts - treba li grupirati po nulama ili jedinicama
+	 * @return - Lista novih maski koje pokrivaju dane maske
+	 */
+	private static List&lt;QMCMask&gt; reduce(List&lt;QMCMask&gt; maske, boolean getProducts) {
+<span class="fc" id="L95">		final boolean products = getProducts;</span>
+<span class="fc" id="L96">		Comparator&lt;QMCMask&gt; comparator = new Comparator&lt;QMCMask&gt;() {</span>
+
+			@Override
+			public int compare(QMCMask o1, QMCMask o2) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				if(!products) {</span>
+<span class="fc" id="L101">					return o1.compareTo(o2);</span>
+				} else {
+<span class="fc" id="L103">					return Integer.compare(o1.getMask().getNumberOfZeroes(),</span>
+							o2.getMask().getNumberOfZeroes());
+				}
+			}
+		};
+		while(true) {
+<span class="fc" id="L109">			Collections.sort(maske, comparator);</span>
+<span class="fc" id="L110">			List&lt;QMCMask&gt; reducirano = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L111">			int size = maske.size();</span>
+<span class="fc" id="L112">			boolean[] flags = new boolean[maske.size()];</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			for(int i = 0; i &lt; size; ++i) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">				for(int j = i+1; j &lt; size; ++j) {</span>
+<span class="fc" id="L115">					QMCMask prva = maske.get(i);</span>
+<span class="fc" id="L116">					QMCMask druga = maske.get(j);</span>
+<span class="fc" id="L117">					int size1 = getNumberOf(prva, getProducts);</span>
+<span class="fc" id="L118">					int size2 = getNumberOf(druga, getProducts);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">					if(size2 - size1 &gt;= 2) {</span>
+<span class="fc" id="L120">						break;</span>
+					}
+<span class="fc bfc" id="L122" title="All 2 branches covered.">					if(size2 - size1 == 1) {</span>
+<span class="fc" id="L123">						Mask temp = Mask.combine(prva.getMask(), druga.getMask());</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">						if(temp == null) {</span>
+<span class="fc" id="L125">							continue;</span>
+						}
+<span class="fc" id="L127">						flags[i] = true;</span>
+<span class="fc" id="L128">						flags[j] = true;</span>
+<span class="fc" id="L129">						reducirano.add(new QMCMask(temp, prva.isDontCare() &amp; druga.isDontCare()));</span>
+					}
+				}
+			}
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if(reducirano.isEmpty()) {</span>
+<span class="fc" id="L134">				break;</span>
+			}
+<span class="fc" id="L136">			int i = 0;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			for(QMCMask mask : maske) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">				if(flags[i] == false) {</span>
+<span class="fc" id="L139">					reducirano.add(mask);</span>
+				}
+<span class="fc" id="L141">				i++;</span>
+<span class="fc" id="L142">			}</span>
+<span class="fc" id="L143">			maske = new ArrayList&lt;&gt;(new HashSet&lt;&gt;(reducirano));</span>
+<span class="fc" id="L144">		}</span>
+<span class="fc" id="L145">		return maske;</span>
+	}
+	
+	/**
+	 * Metoda koja iz danih maska implikanata izdvaja bitne primarne.
+	 * @param bf - funkcija kojoj pripadaju implikanti
+	 * @param maske - dani implikanti 
+	 * @param getProducts - true ako se radi po makstermima, false ako po mintermima
+	 * @return - lista bitnih primarnih implikanata
+	 */
+	private static List&lt;QMCMask&gt; makePrimaryImplicants(BooleanFunction bf, List&lt;QMCMask&gt; maske, boolean getProducts) {
+<span class="fc" id="L156">		List&lt;QMCMask&gt; primary = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L157">		int[] tab = new int[1 &lt;&lt; bf.getDomain().size()];</span>
+<span class="fc" id="L158">		Set&lt;Integer&gt; minterms = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		Iterator&lt;Integer&gt; it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		while(it.hasNext()) {</span>
+<span class="fc" id="L161">			minterms.add(it.next());</span>
+		}
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		for(QMCMask mask : maske) {</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if(mask.isDontCare()) {</span>
+<span class="fc" id="L165">				continue;</span>
+			}
+<span class="fc" id="L167">			List&lt;Mask&gt; maska = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L168">			maska.add(mask.getMask());</span>
+<span class="fc" id="L169">			BooleanFunction f = new MaskBasedBF(&quot;temp&quot;, bf.getDomain(), true, </span>
+					maska, new ArrayList&lt;Mask&gt;());
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			for(int i : f.mintermIterable()) {</span>
+<span class="fc" id="L172">				tab[i]++;</span>
+<span class="fc" id="L173">			}</span>
+<span class="fc" id="L174">		}</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for(QMCMask mask : maske) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if(mask.isDontCare()) {</span>
+<span class="fc" id="L177">				continue;</span>
+			}
+<span class="fc" id="L179">			List&lt;Mask&gt; maska = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L180">			maska.add(mask.getMask());</span>
+<span class="fc" id="L181">			BooleanFunction f = new MaskBasedBF(&quot;temp&quot;, bf.getDomain(), true, </span>
+					maska, new ArrayList&lt;Mask&gt;());
+
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			for(int i : f.mintermIterable()) {</span>
+<span class="fc bfc" id="L185" title="All 4 branches covered.">				if(tab[i] == 1 &amp;&amp; minterms.contains(i)) {</span>
+<span class="fc" id="L186">					primary.add(mask);</span>
+<span class="fc" id="L187">					break;</span>
+				}
+<span class="fc" id="L189">			}</span>
+<span class="fc" id="L190">		}</span>
+<span class="fc" id="L191">		return primary;</span>
+	}
+	
+	/**
+	 * Metoda koja za dane maske radi Pyne-McCluskey metodu.
+	 * @param maske - dane maske
+	 * @param notCovered - indeksi koje treba pokriti
+	 * @return lista koja zadržava liste maski generiranih Pyne-McCluskey metodom.
+	 */
+	private static List&lt;List&lt;QMCMask&gt;&gt; pyne(List&lt;QMCMask&gt; maske, List&lt;Integer&gt; notCovered) {
+<span class="fc" id="L201">		List&lt;List&lt;QMCMask&gt;&gt; rez = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L202">		boolean prviProlaz = true;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for(int i : notCovered) {</span>
+<span class="fc" id="L204">			List&lt;QMCMask&gt; curr = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			for(QMCMask maska : maske) {</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">				if(maska.containsIndex(i)) {</span>
+<span class="fc" id="L207">					curr.add(maska);</span>
+				}
+<span class="fc" id="L209">			}</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			if(prviProlaz) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">				for(QMCMask maska : curr) {</span>
+<span class="fc" id="L212">					rez.add(new ArrayList&lt;&gt;(Arrays.asList(maska)));</span>
+<span class="fc" id="L213">				}</span>
+<span class="fc" id="L214">				prviProlaz = false;</span>
+			} else {
+<span class="fc" id="L216">				List&lt;List&lt;QMCMask&gt;&gt; nova = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">				for(List&lt;QMCMask&gt; temp : rez) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">					for(QMCMask maska : curr) {</span>
+<span class="fc" id="L219">						temp.add(maska);</span>
+<span class="fc" id="L220">						nova.add(new ArrayList&lt;&gt;(temp));</span>
+<span class="fc" id="L221">						temp.remove(maska);</span>
+<span class="fc" id="L222">					}</span>
+<span class="fc" id="L223">				}</span>
+<span class="fc" id="L224">				rez = nova;</span>
+			}
+<span class="fc" id="L226">		}</span>
+<span class="fc" id="L227">		List&lt;List&lt;QMCMask&gt;&gt; bezDuplikata = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L228">		int size = rez.size();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		for(int i = 0; i &lt; size; ++i) {</span>
+<span class="fc" id="L230">			boolean dodaj = true;</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">			for(int j = i + 1; j &lt; size; ++j) {</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">				if(rez.get(j).containsAll(rez.get(i))) {</span>
+<span class="nc" id="L233">					dodaj = false;</span>
+<span class="nc" id="L234">					break;</span>
+				}
+			}
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if(dodaj) {</span>
+<span class="fc" id="L238">				bezDuplikata.add(rez.get(i));</span>
+			}
+		}
+<span class="fc" id="L241">		return bezDuplikata;</span>
+	}
+	
+	/**
+	 * Metoda koja provjerava da li je funkcija u potpunosti pokrivena sa danim implikantima
+	 * @param primary - dani implikanti
+	 * @param bf - funkcija
+	 * @param getProducts - gledaju li se makstermi ili mintermi
+	 * @return true ako je pokrivena, false inače
+	 */
+	private static boolean isCovered(List&lt;QMCMask&gt; primary, BooleanFunction bf, boolean getProducts) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		Iterator&lt;Integer&gt; it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		while(it.hasNext()) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">			if(!isContained(primary, it.next())) {</span>
+<span class="fc" id="L255">				return false;</span>
+			}
+		}
+<span class="fc" id="L258">		return true;</span>
+	}
+
+	/**
+	 * Provjerava da li je dani indeks sadržan u danim maskama.
+	 * @param primary - dane maske
+	 * @param index - indeks
+	 * @return true ako je, false inače
+	 */
+	private static boolean isContained(List&lt;QMCMask&gt; primary, int index) {
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		for(QMCMask maska : primary) {</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">			if(maska.containsIndex(index)) {</span>
+<span class="fc" id="L270">				return true;</span>
+			}
+<span class="fc" id="L272">		}</span>
+<span class="fc" id="L273">		return false;</span>
+	}
+	
+	/**
+	 * Vraća listu indeksa koji nisu pokriveni danim implikantima u danoj funkciji.
+	 * @param primary - lista danih implikanata
+	 * @param bf - dana funkcija
+	 * @param getProducts - true ako je po makstermima, false ako je po mintermima
+	 * @return lista indeksa koji nisu pokriveni
+	 */
+	private static List&lt;Integer&gt; indexesNotCovered(List&lt;QMCMask&gt; primary, BooleanFunction bf, boolean getProducts) {
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">		Iterator&lt;Integer&gt; it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();</span>
+<span class="fc" id="L285">		List&lt;Integer&gt; indeksi = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">		while(it.hasNext()) {</span>
+<span class="fc" id="L287">			int index = it.next();</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">			if(!isContained(primary, index)) {</span>
+<span class="fc" id="L289">				indeksi.add(index);</span>
+			}
+<span class="fc" id="L291">		}</span>
+<span class="fc" id="L292">		return indeksi;</span>
+	}
+	
+	/**
+	 * Vraća broj nula ili jedinica u danoj maski.
+	 * @param mask - dana maska
+	 * @param getProducts - true ako treba brojati nule, false ako treba brojati jedinice
+	 * @return broj nula ili jedinica.
+	 */
+	private static int getNumberOf(QMCMask mask, boolean getProducts) {
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		if(getProducts) {</span>
+<span class="fc" id="L303">			return mask.getMask().getNumberOfZeroes();</span>
+		} else {
+<span class="fc" id="L305">			return mask.getMask().getNumberOfOnes();</span>
+		}
+	}
+	
+	/**
+	 * Iz dane liste {@link QMCMask} generira listu pripadajućih {@link Mask}.
+	 * @param original - dana lista koja sadrži {@link QMCMask}
+	 * @return - lista koja sadržava {@link Mask}
+	 */
+	private static List&lt;Mask&gt; extractMasks(List&lt;QMCMask&gt; original) {
+<span class="fc" id="L315">		List&lt;Mask&gt; maske = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">		for(QMCMask maska : original) {</span>
+<span class="fc" id="L317">			maske.add(maska.getMask());</span>
+<span class="fc" id="L318">		}</span>
+<span class="fc" id="L319">		return maske;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

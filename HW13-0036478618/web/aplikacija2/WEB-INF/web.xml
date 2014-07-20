@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="false">
+
+	<display-name>HW13-0036478618</display-name>
+	<description>
+  		13. homework for java class
+	</description>
+
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.IndexServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>colors</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.ColorsServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>setColor</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.SetColorServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>squares</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.SquaresServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>funny</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.StoryServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>reportImage</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.ReportImageServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>report</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.ReportServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>powers</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.PowersServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>appInfo</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.AppInfoServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>glasanje</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.GlasanjeServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>glasaj</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.GlasanjeGlasajServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>rezultati</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.GlasanjeRezultatiServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ggrafika</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.GlasanjeGrafikaServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>gxls</servlet-name>
+		<servlet-class>hr.fer.zemris.java.servlets.GlasanjeXLSServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/index.html</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>colors</servlet-name>
+		<url-pattern>/colors</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>setColor</servlet-name>
+		<url-pattern>/setColor</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>squares</servlet-name>
+		<url-pattern>/squares</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>funny</servlet-name>
+		<url-pattern>/stories/funny.jsp</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>reportImage</servlet-name>
+		<url-pattern>/reportImage.png</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>report</servlet-name>
+		<url-pattern>/report.jsp</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>powers</servlet-name>
+		<url-pattern>/powers</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>appInfo</servlet-name>
+		<url-pattern>/appinfo.jsp</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>glasanje</servlet-name>
+		<url-pattern>/glasanje</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>glasaj</servlet-name>
+		<url-pattern>/glasanje-glasaj</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>rezultati</servlet-name>
+		<url-pattern>/glasanje-rezultati</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ggrafika</servlet-name>
+		<url-pattern>/glasanje-grafika</url-pattern>
+	</servlet-mapping>
+		
+	<servlet-mapping>
+		<servlet-name>gxls</servlet-name>
+		<url-pattern>/glasanje-xls</url-pattern>
+	</servlet-mapping>	
+</web-app>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OperatorTreeBF.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool.fimpl</a> &gt; <span class="el_source">OperatorTreeBF.java</span></div><h1>OperatorTreeBF.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool.fimpl;
+
+import hr.fer.zemris.bool.BooleanFunction;
+import hr.fer.zemris.bool.BooleanOperator;
+import hr.fer.zemris.bool.BooleanValue;
+import hr.fer.zemris.bool.BooleanVariable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Represents a boolean function constructed from an operator tree.
+ * @author Ivan Krpelnik
+ *
+ */
+public class OperatorTreeBF implements BooleanFunction {
+
+	private String name;
+	private List&lt;BooleanVariable&gt; domain;
+	private BooleanOperator operatorTree;
+	
+	/**
+	 * Constructs this function.
+	 * @param name - String
+	 * @param domain - List&lt;BooleanVariable&gt;
+	 * @param operatorTree - BooleanOperator
+	 * @throws NullPointerException if some of the values are null.
+	 */
+	public OperatorTreeBF(String name, List&lt;BooleanVariable&gt; domain, BooleanOperator operatorTree) {
+<span class="fc" id="L31">		super();</span>
+<span class="pc bpc" id="L32" title="4 of 8 branches missed.">		if(name == null || domain == null || operatorTree == null || domain.contains(null)) {</span>
+<span class="nc" id="L33">			throw new NullPointerException();</span>
+		}
+		
+<span class="fc" id="L36">		this.name = name;</span>
+<span class="fc" id="L37">		this.domain = new ArrayList&lt;BooleanVariable&gt;(domain);</span>
+<span class="fc" id="L38">		this.operatorTree = operatorTree;</span>
+<span class="fc" id="L39">	}</span>
+	
+	/**
+	 * Returns name of this function.
+	 * @return String
+	 */
+	@Override
+	public String getName() {
+<span class="fc" id="L47">		return name;</span>
+	}
+
+	/**
+	 * Returns value of this function.
+	 * @return BooleanValue
+	 */
+	@Override
+	public BooleanValue getValue() {
+<span class="fc" id="L56">		return operatorTree.getValue();</span>
+	}
+
+	/**
+	 * Returns domain of this function.
+	 * @return unmodifiableList&lt;BooleanVariable&gt;
+	 */
+	@Override
+	public List&lt;BooleanVariable&gt; getDomain() {
+<span class="nc" id="L65">		return Collections.unmodifiableList(domain);</span>
+	}
+
+	@Override
+	public boolean hasMinterm(int minterm) {
+<span class="fc" id="L70">		setDomain(minterm);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		return getValue() == BooleanValue.TRUE;</span>
+	}
+
+	@Override
+	public boolean hasMaxterm(int maxterm) {
+<span class="fc" id="L76">		setDomain(maxterm);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		return getValue() == BooleanValue.FALSE;</span>
+	}
+
+	@Override
+	public boolean hasDontCare(int dontcare) {
+<span class="fc" id="L82">		setDomain(dontcare);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		return getValue() == BooleanValue.DONT_CARE;</span>
+	}
+	
+	/**
+	 * Private method that sets domain of this function to some index.
+	 * @param index - value on which domain should be set.
+	 */
+	private void setDomain(int index) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for(int i = domain.size() - 1; i &gt;= 0; i--) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if((index &amp; 1) == 1) {</span>
+<span class="fc" id="L93">				domain.get(i).setValue(BooleanValue.TRUE);</span>
+			} else {
+<span class="fc" id="L95">				domain.get(i).setValue(BooleanValue.FALSE);</span>
+			}
+<span class="fc" id="L97">			index /= 2;</span>
+		}
+<span class="fc" id="L99">	}</span>
+
+	@Override
+	public Iterable&lt;Integer&gt; mintermIterable() {
+<span class="fc" id="L103">		return Collections.unmodifiableList(createIndexes(BooleanValue.TRUE));</span>
+	}
+
+	@Override
+	public Iterable&lt;Integer&gt; maxtermIterable() {
+<span class="fc" id="L108">		return Collections.unmodifiableList(createIndexes(BooleanValue.FALSE));</span>
+	}
+
+	@Override
+	public Iterable&lt;Integer&gt; dontcareIterable() {
+<span class="fc" id="L113">		return Collections.unmodifiableList(createIndexes(BooleanValue.DONT_CARE));</span>
+	}
+
+	/**
+	 * Private method that constructs indexes at which this function is given BooleanValue.
+	 * @param value - BooleanValue.
+	 * @return List&lt;Integer&gt; indexes.
+	 */
+	private List&lt;Integer&gt; createIndexes(BooleanValue value) {
+<span class="fc" id="L122">		List&lt;Integer&gt; indexes = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L123">		int size = 1 &lt;&lt; domain.size();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for(int i = 0; i &lt; size; ++i) {</span>
+<span class="fc" id="L125">			setDomain(i);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if(getValue() == value) {</span>
+<span class="fc" id="L127">				indexes.add(i);</span>
+			}
+		}
+<span class="fc" id="L130">		return indexes;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

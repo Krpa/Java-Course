@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>QMCMinimizerTest.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool.qmc</a> &gt; <span class="el_source">QMCMinimizerTest.java</span></div><h1>QMCMinimizerTest.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool.qmc;
+
+import hr.fer.zemris.bool.BooleanFunction;
+import hr.fer.zemris.bool.BooleanVariable;
+import hr.fer.zemris.bool.Mask;
+import hr.fer.zemris.bool.fimpl.IndexedBF;
+import hr.fer.zemris.bool.fimpl.MaskBasedBF;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
+
+<span class="fc" id="L16">public class QMCMinimizerTest {</span>
+	
+	@Test
+	public void MinimizerTest1() {
+<span class="fc" id="L20">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L21">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L22">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L23">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L24">		List&lt;Integer&gt; minterms = Arrays.asList(0,1,4,5,11,15);</span>
+<span class="fc" id="L25">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		false,
+		minterms,
+		new ArrayList&lt;Integer&gt;()
+		);
+<span class="fc" id="L32">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, true);</span>
+<span class="fc" id="L33">		System.out.println(&quot;Prvi test:&quot;);</span>
+<span class="fc" id="L34">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L37">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L38">			}</span>
+		}
+<span class="fc" id="L40">	}</span>
+	
+	@Test
+	public void MinimizerTest2() {
+<span class="fc" id="L44">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L45">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L46">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L47">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L48">		List&lt;Integer&gt; minterms = Arrays.asList(0,1,4,5,9,11,15);</span>
+<span class="fc" id="L49">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		new ArrayList&lt;Integer&gt;()
+		);
+<span class="fc" id="L56">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);</span>
+<span class="fc" id="L57">		System.out.println(&quot;Drugi test:&quot;);</span>
+<span class="fc" id="L58">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc" id="L60">			System.out.println(&quot;Mogući minimalni oblik:&quot;);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L62">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L63">			}</span>
+		}
+<span class="fc" id="L65">	}</span>
+	
+	@Test
+	public void MinimizerTest3() {
+<span class="fc" id="L69">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L70">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L71">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L72">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L73">		List&lt;Integer&gt; minterms = Arrays.asList(0,1,4,5,9,15);</span>
+<span class="fc" id="L74">		List&lt;Integer&gt; dontCares = Arrays.asList(11);</span>
+<span class="fc" id="L75">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		dontCares
+		);
+<span class="fc" id="L82">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);</span>
+<span class="fc" id="L83">		System.out.println(&quot;Treci test:&quot;);</span>
+<span class="fc" id="L84">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc" id="L86">			System.out.println(&quot;Mogući minimalni oblik:&quot;);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L88">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L89">			}</span>
+		}
+<span class="fc" id="L91">	}</span>
+	
+	@Test
+	public void MinimizerTest4() {
+<span class="fc" id="L95">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L96">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L97">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L98">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L99">		List&lt;Integer&gt; minterms = Arrays.asList(4,5,6,7,8,9,10,11,13,14);</span>
+<span class="fc" id="L100">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		new ArrayList&lt;Integer&gt;()
+		);
+<span class="fc" id="L107">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);</span>
+<span class="fc" id="L108">		System.out.println(&quot;Cetvrti test:&quot;);</span>
+<span class="fc" id="L109">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc" id="L111">			System.out.println(&quot;Mogući minimalni oblik:&quot;);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L113">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L114">			}</span>
+		}
+<span class="fc" id="L116">	}</span>
+	
+	@Test
+	public void MinimizerTest5() {
+<span class="fc" id="L120">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L121">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L122">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L123">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L124">		List&lt;Integer&gt; minterms = Arrays.asList(4,5,7,9,10,11,13,14);</span>
+<span class="fc" id="L125">		List&lt;Integer&gt; dontCares = Arrays.asList(6,8);</span>
+<span class="fc" id="L126">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		dontCares
+		);
+<span class="fc" id="L133">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);</span>
+<span class="fc" id="L134">		System.out.println(&quot;Peti test:&quot;);</span>
+<span class="fc" id="L135">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc" id="L137">			System.out.println(&quot;Mogući minimalni oblik:&quot;);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L139">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L140">			}</span>
+		}
+<span class="fc" id="L142">	}</span>
+	
+	@Test
+	public void MinimizerTest6() {
+<span class="fc" id="L146">		BooleanVariable varA = new BooleanVariable(&quot;A&quot;);</span>
+<span class="fc" id="L147">		BooleanVariable varB = new BooleanVariable(&quot;B&quot;);</span>
+<span class="fc" id="L148">		BooleanVariable varC = new BooleanVariable(&quot;C&quot;);</span>
+<span class="fc" id="L149">		BooleanVariable varD = new BooleanVariable(&quot;D&quot;);</span>
+<span class="fc" id="L150">		List&lt;Integer&gt; minterms = Arrays.asList(0,1,4,5,11,15);</span>
+<span class="fc" id="L151">		List&lt;Integer&gt; dontCares = Arrays.asList(2,6,10);</span>
+<span class="fc" id="L152">		BooleanFunction f1 = new IndexedBF(</span>
+		&quot;f1&quot;, 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		dontCares
+		);
+<span class="fc" id="L159">		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);</span>
+<span class="fc" id="L160">		System.out.println(&quot;Sesti test:&quot;);</span>
+<span class="fc" id="L161">		System.out.println(&quot;Minimalnih oblika ima: &quot; + fje.length);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for(MaskBasedBF f : fje) {</span>
+<span class="fc" id="L163">			System.out.println(&quot;Mogući minimalni oblik:&quot;);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			for(Mask m : f.getMasks()) {</span>
+<span class="fc" id="L165">				System.out.println(&quot; &quot; + m);</span>
+<span class="fc" id="L166">			}</span>
+		}
+<span class="fc" id="L168">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

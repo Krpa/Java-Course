@@ -1,0 +1,35 @@
+		load r0, @brojac
+		load r1, @nula
+		load r4, @novired
+		load r5, @inpporuka
+		load r6, @errporuka
+		load r7, @outporuka
+
+@input:		echo r5
+		iinput @lokacija
+		jumpIfTrue @dalje
+		jump @ispiserr
+
+@dalje:		echo r7
+		load r2, @lokacija
+
+@petlja:	testEquals r0, r1
+		jumpIfTrue @kraj
+		increment r2
+		echo r2
+		echo r4
+		decrement r0
+		jump @petlja
+
+@kraj:		halt
+
+@ispiserr:	echo r6
+		jump @input
+
+@inpporuka:	DEFSTR "Unesite cijeli broj: "
+@errporuka:	DEFSTR "Unos nije moguce protumaciti kao cijeli broj.\n"
+@outporuka:	DEFSTR "Sljedecih 5 brojeva je:\n"
+@brojac:	DEFINT	5
+@nula:		DEFINT	0
+@lokacija:	DEFINT	100
+@novired:	DEFSTR	"\n"

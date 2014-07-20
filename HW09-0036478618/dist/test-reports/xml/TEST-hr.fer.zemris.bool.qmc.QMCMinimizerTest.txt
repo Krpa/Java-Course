@@ -1,0 +1,84 @@
+Testsuite: hr.fer.zemris.bool.qmc.QMCMinimizerTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,026 sec
+------------- Standard Output ---------------
+Prvi test:
+Minimalnih oblika ima: 1
+ 1X11
+ 0X0X
+Drugi test:
+Minimalnih oblika ima: 2
+Moguæi minimalni oblik:
+ 0X0X
+ 1X11
+ X001
+Moguæi minimalni oblik:
+ 0X0X
+ 1X11
+ 10X1
+Treci test:
+Minimalnih oblika ima: 2
+Moguæi minimalni oblik:
+ 0X0X
+ 1X11
+ X001
+Moguæi minimalni oblik:
+ 0X0X
+ 1X11
+ 10X1
+Cetvrti test:
+Minimalnih oblika ima: 4
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ 1X01
+ X110
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ 1X01
+ 1X10
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ X101
+ X110
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ X101
+ 1X10
+Peti test:
+Minimalnih oblika ima: 4
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ 1X01
+ X110
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ 1X01
+ 1X10
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ X101
+ X110
+Moguæi minimalni oblik:
+ 10XX
+ 01XX
+ X101
+ 1X10
+Sesti test:
+Minimalnih oblika ima: 1
+Moguæi minimalni oblik:
+ 0X0X
+ 1X11
+------------- ---------------- ---------------
+
+Testcase: MinimizerTest1 took 0,004 sec
+Testcase: MinimizerTest2 took 0,002 sec
+Testcase: MinimizerTest3 took 0,001 sec
+Testcase: MinimizerTest4 took 0,002 sec
+Testcase: MinimizerTest5 took 0,001 sec
+Testcase: MinimizerTest6 took 0 sec

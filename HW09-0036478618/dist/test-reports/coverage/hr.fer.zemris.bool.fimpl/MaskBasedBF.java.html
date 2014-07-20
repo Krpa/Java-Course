@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MaskBasedBF.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool.fimpl</a> &gt; <span class="el_source">MaskBasedBF.java</span></div><h1>MaskBasedBF.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool.fimpl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Stack;
+
+import hr.fer.zemris.bool.BooleanFunction;
+import hr.fer.zemris.bool.BooleanValue;
+import hr.fer.zemris.bool.BooleanVariable;
+import hr.fer.zemris.bool.Mask;
+import hr.fer.zemris.bool.MaskValue;
+
+/**
+ * 
+ * Represents BooleanFunction which is defined from given masks of minterms (or maxterms) and don't cares.&lt;br&gt;
+ * It holds private instance of IndexedBF which does all the work.
+ * @author Ivan Krpelnik
+ *
+ */
+public class MaskBasedBF implements BooleanFunction {
+
+	private String name;
+	private List&lt;BooleanVariable&gt; domain;
+	private boolean masksAreMinterms;
+	private List&lt;Mask&gt; masks;
+	private List&lt;Mask&gt; dontCareMasks;
+	private IndexedBF indexedBF;
+	
+	/**
+	 * Constructs MaskedBasedBF from given parameters.
+	 * Lists can be empty, but must not be null or contain nulls.
+	 * @param name - name of this MaskedBasedBF.
+	 * @param domain - domain of this MaskedBasedBF.
+	 * @param masksAreMinterms - boolean, should be true if given masks are masks of minterms 
+	 * or false if given masks are masks of maxterms.
+	 * @param masks - masks of minterms or maxterms.
+	 * @param dontCaresMasks - masks of don't care values.
+	 * @throws NullPointerException if some of the values are null.
+	 * @throws IllegalArgumentException if indexes (calculated form masks) are out of bounds (calculated from domain's size).
+	 */
+	public MaskBasedBF(String name, List&lt;BooleanVariable&gt; domain, boolean masksAreMinterms, 
+			List&lt;Mask&gt; masks, List&lt;Mask&gt; dontCareMasks) {
+<span class="fc" id="L45">		super();</span>
+<span class="pc bpc" id="L46" title="7 of 14 branches missed.">		if(name == null || domain == null || domain.contains(null) ||</span>
+				masks == null || masks.contains(null) ||
+				dontCareMasks == null || dontCareMasks.contains(null)) {
+<span class="nc" id="L49">			throw new NullPointerException();</span>
+		}
+<span class="fc" id="L51">		this.name = name;</span>
+<span class="fc" id="L52">		this.masksAreMinterms = masksAreMinterms;</span>
+<span class="fc" id="L53">		this.domain = new ArrayList&lt;&gt;(domain);</span>
+<span class="fc" id="L54">		List&lt;Integer&gt; indexes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">		List&lt;Integer&gt; dontCares = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">		this.masks = new ArrayList&lt;Mask&gt;(new LinkedHashSet&lt;Mask&gt;(masks));</span>
+<span class="fc" id="L57">		indexes.addAll(indexesFromMasks(this.masks));</span>
+<span class="fc" id="L58">		this.dontCareMasks = new ArrayList&lt;Mask&gt;(new LinkedHashSet&lt;Mask&gt;(dontCareMasks));</span>
+<span class="fc" id="L59">		dontCares.addAll(indexesFromMasks(this.dontCareMasks));</span>
+		try {
+<span class="fc" id="L61">			this.indexedBF = new IndexedBF(this.name, this.domain, this.masksAreMinterms, indexes, dontCares);</span>
+<span class="nc" id="L62">		} catch(Exception e) {</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException(&quot;Invalid arguments for MaskedBF.&quot;, e);</span>
+<span class="fc" id="L64">		}</span>
+<span class="fc" id="L65">	}</span>
+	
+	/**
+	 * Returns name of this function.
+	 */
+	@Override
+	public String getName() {
+<span class="nc" id="L72">		return name;</span>
+	}
+
+	/**
+	 * Returns value of this function.
+	 */
+	@Override
+	public BooleanValue getValue() {
+<span class="nc" id="L80">		return indexedBF.getValue();</span>
+	}
+
+	/**
+	 * Returns masks of this function.
+	 */
+	public List&lt;Mask&gt; getMasks() {
+<span class="fc" id="L87">		return masks;</span>
+	}
+	
+	/**
+	 * Returns dont care masks.
+	 */
+	public List&lt;Mask&gt; getDontCareMasks() {
+<span class="nc" id="L94">		return dontCareMasks;</span>
+	}
+	
+	/**
+	 * @return True if masks are products, false otherwise.
+	 */
+	public boolean areMasksProducts() {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		return !masksAreMinterms;</span>
+	}
+	
+	/**
+	 * Returns domain of this function.
+	 * @return unmodifiableList&lt;BooleanVariabl&gt; domain.
+	 */
+	@Override
+	public List&lt;BooleanVariable&gt; getDomain() {
+<span class="nc" id="L110">		return Collections.unmodifiableList(domain);</span>
+	}
+
+	@Override
+	public boolean hasMinterm(int minterm) {
+<span class="fc" id="L115">		return indexedBF.hasMinterm(minterm);</span>
+	}
+
+	@Override
+	public boolean hasMaxterm(int maxterm) {
+<span class="fc" id="L120">		return indexedBF.hasMaxterm(maxterm);</span>
+	}
+
+	@Override
+	public boolean hasDontCare(int dontcare) {
+<span class="fc" id="L125">		return indexedBF.hasDontCare(dontcare);</span>
+	}
+
+	@Override
+	public Iterable&lt;Integer&gt; mintermIterable() {
+<span class="fc" id="L130">		return indexedBF.mintermIterable();</span>
+	}
+
+	@Override
+	public Iterable&lt;Integer&gt; maxtermIterable() {
+<span class="fc" id="L135">		return indexedBF.maxtermIterable();</span>
+	}
+	
+	@Override
+	public Iterable&lt;Integer&gt; dontcareIterable() {
+<span class="fc" id="L140">		return indexedBF.dontcareIterable();</span>
+	}
+	
+	/**
+	 * Private methods that constructs indexes from given masks.
+	 * @param masks 
+	 * @return List&lt;Integer&gt; list of indexes.
+	 */
+	private List&lt;Integer&gt; indexesFromMasks(List&lt;Mask&gt; masks) {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if(masks == null) {</span>
+<span class="nc" id="L150">			return null;</span>
+		}
+<span class="fc" id="L152">		List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for(Mask mask : masks) {</span>
+<span class="fc" id="L154">			Stack&lt;Mask&gt; stack = new Stack&lt;Mask&gt;();</span>
+<span class="fc" id="L155">			stack.push(mask);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			while(!stack.empty()) {</span>
+<span class="fc" id="L157">				Mask tempMask = stack.pop();</span>
+<span class="fc" id="L158">				int size = tempMask.getSize();</span>
+<span class="fc" id="L159">				MaskValue[] values1 = new MaskValue[size];</span>
+<span class="fc" id="L160">				MaskValue[] values2 = new MaskValue[size];</span>
+				int i;
+<span class="fc bfc" id="L162" title="All 2 branches covered.">				for(i = 0; i &lt; size; ++i) {</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">					if(tempMask.getValue(i) == MaskValue.DONT_CARE) {</span>
+<span class="fc" id="L164">						values1[i] = MaskValue.ONE;</span>
+<span class="fc" id="L165">						values2[i] = MaskValue.ZERO;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">						for(int j = i + 1; j &lt; size; ++j) {</span>
+<span class="fc" id="L167">							values1[j] = tempMask.getValue(j);</span>
+<span class="fc" id="L168">							values2[j] = tempMask.getValue(j);</span>
+						}
+<span class="fc" id="L170">						stack.push(new Mask(values1));</span>
+<span class="fc" id="L171">						stack.push(new Mask(values2));</span>
+<span class="fc" id="L172">						break;</span>
+					}
+<span class="fc" id="L174">					values1[i] = tempMask.getValue(i);</span>
+<span class="fc" id="L175">					values2[i] = tempMask.getValue(i);</span>
+				}
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				if(i == size) {</span>
+<span class="fc" id="L178">					int numberValue = 0;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">					for(int j = 0; j &lt; size; ++j) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">						if(values1[j] == MaskValue.ONE) {</span>
+<span class="fc" id="L181">							numberValue = numberValue * 2 + 1;</span>
+						} else {
+<span class="fc" id="L183">							numberValue = numberValue * 2;</span>
+						}
+					}
+<span class="fc" id="L186">					list.add(numberValue);</span>
+				}
+<span class="fc" id="L188">			}</span>
+<span class="fc" id="L189">		}</span>
+<span class="fc" id="L190">		return list;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

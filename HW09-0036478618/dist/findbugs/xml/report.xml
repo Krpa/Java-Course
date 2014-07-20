@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="2.0.3" sequence="0" timestamp="1399998166118" analysisTimestamp="1399998166277" release="">
+  <Project projectName="HW09-0036478618">
+    <Jar>C:\FER\Java\workspaceNew\HW09-2\build\classes</Jar>
+    <SrcDir>C:\FER\Java\workspaceNew\HW09-2\src\main\java</SrcDir>
+  </Project>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" instanceHash="31e57012d000c13e469e287c47375ab2" instanceOccurrenceNum="0" instanceOccurrenceMax="0" rank="18">
+    <ShortMessage>Method concatenates strings using + in a loop</ShortMessage>
+    <LongMessage>hr.fer.zemris.bool.Mask.toString() concatenates strings using + in a loop</LongMessage>
+    <Class classname="hr.fer.zemris.bool.Mask" primary="true">
+      <SourceLine classname="hr.fer.zemris.bool.Mask" start="23" end="329" sourcefile="Mask.java" sourcepath="hr/fer/zemris/bool/Mask.java" relSourcepath="hr\fer\zemris\bool\Mask.java">
+        <Message>At Mask.java:[lines 23-329]</Message>
+      </SourceLine>
+      <Message>In class hr.fer.zemris.bool.Mask</Message>
+    </Class>
+    <Method classname="hr.fer.zemris.bool.Mask" name="toString" signature="()Ljava/lang/String;" isStatic="false" primary="true">
+      <SourceLine classname="hr.fer.zemris.bool.Mask" start="319" end="329" startBytecode="0" endBytecode="250" sourcefile="Mask.java" sourcepath="hr/fer/zemris/bool/Mask.java" relSourcepath="hr\fer\zemris\bool\Mask.java"/>
+      <Message>In method hr.fer.zemris.bool.Mask.toString()</Message>
+    </Method>
+    <SourceLine classname="hr.fer.zemris.bool.Mask" primary="true" start="326" end="326" startBytecode="92" endBytecode="92" sourcefile="Mask.java" sourcepath="hr/fer/zemris/bool/Mask.java" relSourcepath="hr\fer\zemris\bool\Mask.java">
+      <Message>At Mask.java:[line 326]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugCategory category="PERFORMANCE">
+    <Description>Performance</Description>
+  </BugCategory>
+  <BugPattern type="SBSC_USE_STRINGBUFFER_CONCATENATION" abbrev="SBSC" category="PERFORMANCE">
+    <ShortDescription>Method concatenates strings using + in a loop</ShortDescription>
+    <Details><![CDATA[
+
+<p> The method seems to be building a String using concatenation in a loop.
+In each iteration, the String is converted to a StringBuffer/StringBuilder,
+   appended to, and converted back to a String.
+   This can lead to a cost quadratic in the number of iterations,
+   as the growing string is recopied in each iteration. </p>
+
+<p>Better performance can be obtained by using
+a StringBuffer (or StringBuilder in Java 1.5) explicitly.</p>
+
+<p> For example:</p>
+<pre>
+  // This is bad
+  String s = "";
+  for (int i = 0; i &lt; field.length; ++i) {
+    s = s + field[i];
+  }
+
+  // This is better
+  StringBuffer buf = new StringBuffer();
+  for (int i = 0; i &lt; field.length; ++i) {
+    buf.append(field[i]);
+  }
+  String s = buf.toString();
+</pre>
+
+    ]]></Details>
+  </BugPattern>
+  <BugCode abbrev="SBSC">
+    <Description>String concatenation in loop using + operator</Description>
+  </BugCode>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Tue, 13 May 2014 18:22:46 +0200" total_classes="24" referenced_classes="64" total_bugs="1" total_size="913" num_packages="5" vm_version="24.55-b03" cpu_seconds="3.03" clock_seconds="3.48" peak_mbytes="52.16" alloc_mbytes="247.50" gc_seconds="0.25" priority_2="1">
+    <FileStats path="hr/fer/zemris/bool/BooleanConstant.java" bugCount="0" size="19"/>
+    <FileStats path="hr/fer/zemris/bool/BooleanFunction.java" bugCount="0" size="7"/>
+    <FileStats path="hr/fer/zemris/bool/BooleanOperator.java" bugCount="0" size="21"/>
+    <FileStats path="hr/fer/zemris/bool/BooleanSource.java" bugCount="0" size="3"/>
+    <FileStats path="hr/fer/zemris/bool/BooleanValue.java" bugCount="0" size="11"/>
+    <FileStats path="hr/fer/zemris/bool/BooleanVariable.java" bugCount="0" size="21"/>
+    <FileStats path="hr/fer/zemris/bool/Mask.java" bugCount="1" size="165" bugHash="f29d0e67e70a23fcbab48880fffe4972"/>
+    <FileStats path="hr/fer/zemris/bool/MaskValue.java" bugCount="0" size="11"/>
+    <FileStats path="hr/fer/zemris/bool/Masks.java" bugCount="0" size="29"/>
+    <FileStats path="hr/fer/zemris/bool/NamedBooleanSource.java" bugCount="0" size="2"/>
+    <FileStats path="hr/fer/zemris/bool/fimpl/IndexedBF.java" bugCount="0" size="100"/>
+    <FileStats path="hr/fer/zemris/bool/fimpl/MaskBasedBF.java" bugCount="0" size="83"/>
+    <FileStats path="hr/fer/zemris/bool/fimpl/OperatorTreeBF.java" bugCount="0" size="48"/>
+    <FileStats path="hr/fer/zemris/bool/opimpl/BooleanOperatorAND.java" bugCount="0" size="20"/>
+    <FileStats path="hr/fer/zemris/bool/opimpl/BooleanOperatorNOT.java" bugCount="0" size="15"/>
+    <FileStats path="hr/fer/zemris/bool/opimpl/BooleanOperatorOR.java" bugCount="0" size="20"/>
+    <FileStats path="hr/fer/zemris/bool/opimpl/BooleanOperators.java" bugCount="0" size="10"/>
+    <FileStats path="hr/fer/zemris/bool/qmc/QMCMask.java" bugCount="0" size="56"/>
+    <FileStats path="hr/fer/zemris/bool/qmc/QMCMinimizer.java" bugCount="0" size="170"/>
+    <FileStats path="hr/fer/zemris/java/sorters/Glavni.java" bugCount="0" size="15"/>
+    <FileStats path="hr/fer/zemris/java/sorters/QSortParallel.java" bugCount="0" size="87"/>
+    <PackageStats package="hr.fer.zemris.bool" total_bugs="1" total_types="10" total_size="289" priority_2="1">
+      <ClassStats class="hr.fer.zemris.bool.BooleanConstant" sourceFile="BooleanConstant.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.BooleanFunction" sourceFile="BooleanFunction.java" interface="true" size="7" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.BooleanOperator" sourceFile="BooleanOperator.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.BooleanSource" sourceFile="BooleanSource.java" interface="true" size="3" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.BooleanValue" sourceFile="BooleanValue.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.BooleanVariable" sourceFile="BooleanVariable.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.Mask" sourceFile="Mask.java" interface="false" size="165" bugs="1" priority_2="1"/>
+      <ClassStats class="hr.fer.zemris.bool.MaskValue" sourceFile="MaskValue.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.Masks" sourceFile="Masks.java" interface="false" size="29" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.NamedBooleanSource" sourceFile="NamedBooleanSource.java" interface="true" size="2" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="hr.fer.zemris.bool.fimpl" total_bugs="0" total_types="4" total_size="231">
+      <ClassStats class="hr.fer.zemris.bool.fimpl.IndexedBF" sourceFile="IndexedBF.java" interface="false" size="96" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.fimpl.IndexedBF$1" sourceFile="IndexedBF.java" interface="false" size="4" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.fimpl.MaskBasedBF" sourceFile="MaskBasedBF.java" interface="false" size="83" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.fimpl.OperatorTreeBF" sourceFile="OperatorTreeBF.java" interface="false" size="48" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="hr.fer.zemris.bool.opimpl" total_bugs="0" total_types="4" total_size="65">
+      <ClassStats class="hr.fer.zemris.bool.opimpl.BooleanOperatorAND" sourceFile="BooleanOperatorAND.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.opimpl.BooleanOperatorNOT" sourceFile="BooleanOperatorNOT.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.opimpl.BooleanOperatorOR" sourceFile="BooleanOperatorOR.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.opimpl.BooleanOperators" sourceFile="BooleanOperators.java" interface="false" size="10" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="hr.fer.zemris.bool.qmc" total_bugs="0" total_types="3" total_size="226">
+      <ClassStats class="hr.fer.zemris.bool.qmc.QMCMask" sourceFile="QMCMask.java" interface="false" size="56" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.qmc.QMCMinimizer" sourceFile="QMCMinimizer.java" interface="false" size="161" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.bool.qmc.QMCMinimizer$1" sourceFile="QMCMinimizer.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="hr.fer.zemris.java.sorters" total_bugs="0" total_types="3" total_size="102">
+      <ClassStats class="hr.fer.zemris.java.sorters.Glavni" sourceFile="Glavni.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.java.sorters.QSortParallel" sourceFile="QSortParallel.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="hr.fer.zemris.java.sorters.QSortParallel$QSortJob" sourceFile="QSortParallel.java" interface="false" size="73" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="706" invocations="442" avgMicrosecondsPerInvocation="1598" maxMicrosecondsPerInvocation="19002" standardDeviationMircosecondsPerInvocation="3247"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="338" invocations="439" avgMicrosecondsPerInvocation="771" maxMicrosecondsPerInvocation="44208" standardDeviationMircosecondsPerInvocation="3343"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="109" invocations="130" avgMicrosecondsPerInvocation="843" maxMicrosecondsPerInvocation="36519" standardDeviationMircosecondsPerInvocation="3341"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="98" invocations="322" avgMicrosecondsPerInvocation="306" maxMicrosecondsPerInvocation="52456" standardDeviationMircosecondsPerInvocation="2919"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="92" invocations="130" avgMicrosecondsPerInvocation="711" maxMicrosecondsPerInvocation="21016" standardDeviationMircosecondsPerInvocation="1967"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="79" invocations="132" avgMicrosecondsPerInvocation="599" maxMicrosecondsPerInvocation="10976" standardDeviationMircosecondsPerInvocation="1380"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="73" invocations="130" avgMicrosecondsPerInvocation="563" maxMicrosecondsPerInvocation="7411" standardDeviationMircosecondsPerInvocation="1116"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="59" invocations="130" avgMicrosecondsPerInvocation="457" maxMicrosecondsPerInvocation="28835" standardDeviationMircosecondsPerInvocation="2514"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="54" invocations="139" avgMicrosecondsPerInvocation="390" maxMicrosecondsPerInvocation="42898" standardDeviationMircosecondsPerInvocation="3620"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="48" invocations="64" avgMicrosecondsPerInvocation="760" maxMicrosecondsPerInvocation="10879" standardDeviationMircosecondsPerInvocation="1764"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="48" invocations="402" avgMicrosecondsPerInvocation="120" maxMicrosecondsPerInvocation="7321" standardDeviationMircosecondsPerInvocation="413"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDeadLocalStores" totalMilliseconds="48" invocations="24" avgMicrosecondsPerInvocation="2004" maxMicrosecondsPerInvocation="34653" standardDeviationMircosecondsPerInvocation="6967"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="45" invocations="128" avgMicrosecondsPerInvocation="351" maxMicrosecondsPerInvocation="2525" standardDeviationMircosecondsPerInvocation="456"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="40" invocations="114" avgMicrosecondsPerInvocation="352" maxMicrosecondsPerInvocation="2593" standardDeviationMircosecondsPerInvocation="462"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindOpenStream" totalMilliseconds="38" invocations="24" avgMicrosecondsPerInvocation="1595" maxMicrosecondsPerInvocation="37955" standardDeviationMircosecondsPerInvocation="7581"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="38" invocations="79" avgMicrosecondsPerInvocation="481" maxMicrosecondsPerInvocation="20241" standardDeviationMircosecondsPerInvocation="2309"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

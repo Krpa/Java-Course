@@ -1,0 +1,2054 @@
+<?xml version="1.0" encoding="WINDOWS-1250" standalone="no"?>
+<pmd-cpd>
+<duplication lines="18" tokens="144">
+<file line="103" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[	public void IndexedBFtest3() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanFunction f2 = new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList<Integer>(),
+				new ArrayList<Integer>()
+				);
+		for(int i = 0; i < 8; ++i)
+			assertEquals(true, f2.hasMaxterm(i));
+		for(int i = 0; i < 8; ++i)
+			assertEquals(false, f2.hasMinterm(i));
+		for(int i = 0; i < 8; ++i)
+			assertEquals(false, f2.hasDontCare(i));
+		assertEquals(false, f2.hasMaxterm(63));]]></codefragment>
+</duplication>
+<duplication lines="18" tokens="108">
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="35" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<codefragment><![CDATA[		);
+		int j = 0;
+		for(Integer i : f1.mintermIterable()) {
+			assertEquals(minterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.maxtermIterable()) {
+			assertEquals(maxterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.dontcareIterable()) {
+			assertEquals(dontCares.get(j), i);
+			j++;
+		}
+		assertEquals(true, f1.hasMinterm(0));
+		assertEquals(false, f1.hasMinterm(2));]]></codefragment>
+</duplication>
+<duplication lines="19" tokens="97">
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		minterms,
+		dontCares
+		);
+		int j = 0;
+		for(Integer i : f1.mintermIterable()) {
+			assertEquals(minterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.maxtermIterable()) {
+			assertEquals(maxterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.dontcareIterable()) {
+			assertEquals(dontCares.get(j), i);
+			j++;
+		}
+		assertEquals(true, f1.hasMinterm(0));]]></codefragment>
+</duplication>
+<duplication lines="17" tokens="95">
+<file line="77" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="35" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<codefragment><![CDATA[		);
+		int j = 0;
+		for(Integer i : f1.mintermIterable()) {
+			assertEquals(minterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.maxtermIterable()) {
+			assertEquals(maxterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.dontcareIterable()) {
+			assertEquals(dontCares.get(j), i);
+			j++;
+		}
+		assertEquals(true, f1.hasMaxterm(0));]]></codefragment>
+</duplication>
+<duplication lines="24" tokens="85">
+<file line="20" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="20" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[	public BooleanOperatorAND(List<BooleanSource> sources) {
+		super(sources);
+		if(sources == null || sources.contains(null)) {
+			throw new NullPointerException();
+		}
+	}
+
+	/**
+	 * Returns value of this operator.
+	 */
+	@Override
+	public BooleanValue getValue() {
+		return makeValue();
+	}
+	
+	/**
+	 * Private methods that calculates value of this function.
+	 * @return BooleanValue - value of this function
+	 */
+	private BooleanValue makeValue() {
+		boolean hasDontCare = false;
+		List<BooleanSource> sources = this.getSources();
+		for(BooleanSource source : sources) {
+			if(source.getValue() == BooleanValue.FALSE) {]]></codefragment>
+</duplication>
+<duplication lines="10" tokens="80">
+<file line="162" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="174" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		}
+		for(QMCMask mask : maske) {
+			if(mask.isDontCare()) {
+				continue;
+			}
+			List<Mask> maska = new ArrayList<>();
+			maska.add(mask.getMask());
+			BooleanFunction f = new MaskBasedBF("temp", bf.getDomain(), true, 
+					maska, new ArrayList<Mask>());
+			for(int i : f.mintermIterable()) {]]></codefragment>
+</duplication>
+<duplication lines="11" tokens="78">
+<file line="5" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\Glavni.java"/>
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<codefragment><![CDATA[	public static void main(String[] args) {
+		final int SIZE = 150000;
+		Random rand = new Random();
+		int[] data = new int[SIZE];
+		for(int i = 0; i < data.length; i++) {
+			data[i] = rand.nextInt();
+		}
+		long t0 = System.currentTimeMillis();
+		QSortParallel.sort(data);
+		long t1 = System.currentTimeMillis();
+		System.out.println("Sortirano: " + QSortParallel.isSorted(data));]]></codefragment>
+</duplication>
+<duplication lines="13" tokens="75">
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="77" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="35" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		);
+		int j = 0;
+		for(Integer i : f1.mintermIterable()) {
+			assertEquals(minterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.maxtermIterable()) {
+			assertEquals(maxterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.dontcareIterable()) {]]></codefragment>
+</duplication>
+<duplication lines="12" tokens="58">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="83" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="134" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		System.out.println("Drugi test:");
+		System.out.println("Minimalnih oblika ima: " + fje.length);
+		for(MaskBasedBF f : fje) {
+			System.out.println("MoguÄ‡i minimalni oblik:");
+			for(Mask m : f.getMasks()) {
+				System.out.println(" " + m);
+			}
+		}
+	}
+	
+	@Test
+	public void MinimizerTest3() {]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="57">
+<file line="19" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="145" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MinimizerTest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");
+		List<Integer> minterms = Arrays.asList(0,1,4,5,11,15);]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="55">
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MinimizerTest2() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");
+		List<Integer> minterms = Arrays.asList(0,1,4,5,9,11,15);]]></codefragment>
+</duplication>
+<duplication lines="9" tokens="54">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="83" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="134" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="160" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		System.out.println("Drugi test:");
+		System.out.println("Minimalnih oblika ima: " + fje.length);
+		for(MaskBasedBF f : fje) {
+			System.out.println("MoguÄ‡i minimalni oblik:");
+			for(Mask m : f.getMasks()) {
+				System.out.println(" " + m);
+			}
+		}
+	}]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="53">
+<file line="19" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="145" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MinimizerTest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");
+		List<Integer> minterms = Arrays.asList(0,1,4,5,11,15);]]></codefragment>
+</duplication>
+<duplication lines="10" tokens="53">
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0,1,4,5,9,11,15);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		new ArrayList<Integer>()
+		);
+		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);
+		System.out.println("Drugi test:");]]></codefragment>
+</duplication>
+<duplication lines="18" tokens="49">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<codefragment><![CDATA[	private BooleanConstant(BooleanValue value) {
+		if(value == null) {
+			throw new NullPointerException();
+		}
+		this.value = value;
+	}
+	
+	/**
+	 * Value of this constant.
+	 */
+	@Override
+	public BooleanValue getValue() {
+		return this.value;
+	}
+	
+	@Override
+	public List<BooleanVariable> getDomain() {
+		return null;]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="49">
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="119" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MinimizerTest4() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");
+		List<Integer> minterms = Arrays.asList(4,5,6,7,8,9,10,11,13,14);]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="47">
+<file line="14" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="64" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[	public void QMCMaskTest1() {
+		Mask m = new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE});
+		QMCMask m1 = new QMCMask(m);
+		QMCMask m2 = new QMCMask(m, true);
+		assertEquals("predana maska mora biti jednaka vraÄ‡enoj", m, m1.getMask());]]></codefragment>
+</duplication>
+<duplication lines="10" tokens="47">
+<file line="74" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="125" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> dontCares = Arrays.asList(11);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,
+		dontCares
+		);
+		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);
+		System.out.println("Treci test:");]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="45">
+<file line="19" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="119" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="145" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MinimizerTest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");
+		List<Integer> minterms = Arrays.asList(0,1,4,5,11,15);]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="42">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(4, 6);
+		List<Integer> dontCares = Arrays.asList(2, 3);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="41">
+<file line="251" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="283" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[	private static boolean isCovered(List<QMCMask> primary, BooleanFunction bf, boolean getProducts) {
+		Iterator<Integer> it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="36">
+<file line="159" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="252" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		Iterator<Integer> it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();
+		while(it.hasNext()) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="35">
+<file line="21" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="19" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="119" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="145" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void MaskedBFtest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		BooleanVariable varD = new BooleanVariable("D");]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="35">
+<file line="14" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="64" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[	public void QMCMaskTest1() {
+		Mask m = new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE});
+		QMCMask m1 = new QMCMask(m);]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="32">
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[				indexes == null || indexes.contains(null)) {
+			throw new NullPointerException();
+		}
+		this.name = name;
+		this.domain = new ArrayList<BooleanVariable>(domain);
+		this.indexesAreMinterms = indexesAreMinterms;]]></codefragment>
+</duplication>
+<duplication lines="11" tokens="32">
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[			}
+			if(source.getValue() == BooleanValue.DONT_CARE) {
+				hasDontCare = true;
+			}
+		}
+		
+		if(hasDontCare) {
+			return BooleanValue.DONT_CARE;
+		}
+		
+		return BooleanValue.TRUE;]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="32">
+<file line="107" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="128" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="157" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		BooleanFunction f2 = new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList<Integer>(),
+				new ArrayList<Integer>()]]></codefragment>
+</duplication>
+<duplication lines="14" tokens="31">
+<file line="129" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		return new Mask(values);
+	}
+
+	/**
+	 * Returns domain of this function.
+	 * @return unmodifiableList<BooleanVariabl> domain.
+	 */
+	@Override
+	public List<BooleanVariable> getDomain() {
+		return Collections.unmodifiableList(domain);
+	}
+
+	@Override
+	public boolean hasMinterm(int minterm) {]]></codefragment>
+</duplication>
+<duplication lines="14" tokens="31">
+<file line="130" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[	}
+
+	/**
+	 * Returns domain of this function.
+	 * @return unmodifiableList<BooleanVariabl> domain.
+	 */
+	@Override
+	public List<BooleanVariable> getDomain() {
+		return Collections.unmodifiableList(domain);
+	}
+
+	@Override
+	public boolean hasMinterm(int minterm) {
+		return hasValue(minterm, indexesAreMinterms, this.indexes, this.dontCares);]]></codefragment>
+</duplication>
+<duplication lines="11" tokens="31">
+<file line="192" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="203" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<codefragment><![CDATA[		if(indexesAreMinterms) {
+			return Collections.unmodifiableList(indexes);
+		} else {
+			return Collections.unmodifiableList(createIndexes());
+		}
+	}
+
+
+	
+	@Override
+	public Iterable<Integer> maxtermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="31">
+<file line="23" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="64" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[	public void IndexedBFtest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");
+		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);]]></codefragment>
+</duplication>
+<duplication lines="13" tokens="30">
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+	
+	/**
+	 * Returns domain of this function.
+	 * @return unmodifiableList<BooleanVariabl> domain.
+	 */
+	@Override
+	public List<BooleanVariable> getDomain() {
+		return Collections.unmodifiableList(domain);
+	}
+
+	@Override
+	public boolean hasMinterm(int minterm) {]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="30">
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="96" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(false, f1.hasMaxterm(3));
+		assertEquals(true, f1.hasDontCare(2));
+		assertEquals(false, f1.hasDontCare(5));
+		assertEquals(BooleanValue.TRUE, f1.getValue());	]]></codefragment>
+</duplication>
+<duplication lines="8" tokens="29">
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="87" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="112" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="138" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[			for(Mask m : f.getMasks()) {
+				System.out.println(" " + m);
+			}
+		}
+	}
+	
+	@Test
+	public void MinimizerTest2() {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="27">
+<file line="159" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="284" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		Iterator<Integer> it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="27">
+<file line="23" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="64" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="103" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="146" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="21" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="19" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="119" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="145" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[	public void IndexedBFtest1() {
+		BooleanVariable varA = new BooleanVariable("A");
+		BooleanVariable varB = new BooleanVariable("B");
+		BooleanVariable varC = new BooleanVariable("C");]]></codefragment>
+</duplication>
+<duplication lines="7" tokens="26">
+<file line="155" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="162" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[				new ArrayList<Integer>()
+				);
+		new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList<Integer>(),]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="26">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0,1,4,5,11,15);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), ]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="26">
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="74" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="125" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0,1,4,5,9,11,15);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,
+		minterms,]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="25">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<codefragment><![CDATA[		if(indexes == null) {
+			throw new NullPointerException();
+		}
+		List<Mask> masks = new ArrayList<Mask>();
+		for(int index : indexes) {]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="25">
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="156" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="163" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		BooleanVariable varC = new BooleanVariable("C");
+		new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList<Integer>(10),]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="25">
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="164" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[			for(Mask m : f.getMasks()) {
+				System.out.println(" " + m);
+			}
+		}
+	}]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="24">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[	public void MaskTest3() {
+		MaskValue[] values = {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE, MaskValue.DONT_CARE};]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="24">
+<file line="107" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="128" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="164" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		BooleanFunction f2 = new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), 
+				true,
+				new ArrayList<Integer>(),]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="22">
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[			List<Integer> dontCares) {
+		super();
+		if(name == null || domain == null || domain.contains(null) || ]]></codefragment>
+</duplication>
+<duplication lines="19" tokens="22">
+<file line="73" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="63" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[													" and indexes of dont care values should not overlap.");
+			}
+	}
+
+	/**
+	 * Returns name of this function.
+	 * @return String name.
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * Calculates and returns value of this function.
+	 * @return BooleanValue - calculated value.
+	 */
+	@Override
+	public BooleanValue getValue() {]]></codefragment>
+</duplication>
+<duplication lines="12" tokens="22">
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[		if(sources == null || sources.contains(null)) {
+			throw new NullPointerException();
+		}
+	}
+
+	/**
+	 * Returns value of this operator.
+	 */
+	@Override
+	public BooleanValue getValue() {
+		return makeValue();
+	}]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="22">
+<file line="79" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="81" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[					bf.hasMaxterm(i) && getProducts) {
+				maske.add(new QMCMask(Masks.fromIndexes(size, i).get(0)));]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="22">
+<file line="115" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="117" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="136" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="138" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[			assertEquals(true, f2.hasMaxterm(i));
+		for(int i = 0; i < 8; ++i)
+			assertEquals(false, f2.hasMinterm(i));]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="22">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="74" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="125" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0,1,4,5,11,15);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), ]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="22">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="103" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		false,
+		minterms,
+		new ArrayList<Integer>()
+		);
+		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, true);]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="21">
+<file line="222" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="122" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		List<Integer> retList = new ArrayList<Integer>();
+		int size = 1 << domain.size();
+		for(int term = 0; term < size; ++term) {]]></codefragment>
+</duplication>
+<duplication lines="16" tokens="21">
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+	
+	/**
+	 * Returns name of this function.
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Returns value of this function.
+	 */
+	@Override
+	public BooleanValue getValue() {
+		return indexedBF.getValue();]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="21">
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="80" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="85" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[			assertEquals(minterms.get(j), i);
+			j++;
+		}
+		j = 0;
+		for(Integer i : f1.maxtermIterable()) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="21">
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="59" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMinterm(0));
+		assertEquals(false, f1.hasMinterm(2));
+		assertEquals(true, f1.hasMaxterm(4));]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="21">
+<file line="15" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		Mask m = new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE});]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="21">
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="83" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="134" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="160" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		System.out.println("Prvi test:");
+		System.out.println("Minimalnih oblika ima: " + fje.length);
+		for(MaskBasedBF f : fje) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="20">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[		if(sources == null || sources.contains(null)) {
+			throw new NullPointerException();
+		}]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="20">
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[				indexes == null || indexes.contains(null)) {
+			throw new NullPointerException();
+		}
+		this.name = name;
+		this.domain = new ArrayList<BooleanVariable>(domain);]]></codefragment>
+</duplication>
+<duplication lines="17" tokens="20">
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+	/**
+	 * Returns name of this function.
+	 * @return String name.
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * Calculates and returns value of this function.
+	 * @return BooleanValue - calculated value.
+	 */
+	@Override
+	public BooleanValue getValue() {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="20">
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(false, Integer.compare(m1.hashCode(), m2.hashCode()) == 0);]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="20">
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="81" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="106" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="132" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="158" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		);
+		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, false);
+		System.out.println("Drugi test:");]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="19">
+<file line="131" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="203" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[	public static Mask combine(Mask first, Mask second) {
+		if(first == null || second == null) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="19">
+<file line="93" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(0));
+		assertEquals(false, f1.hasMaxterm(2));]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="19">
+<file line="93" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(0));
+		assertEquals(false, f1.hasMaxterm(2));
+		assertEquals(true, f1.hasMinterm(4));]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="18">
+<file line="29" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="70" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="74" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="125" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> dontCares = Arrays.asList(2, 3);
+		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="18">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="49" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="100" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="126" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="152" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanFunction f1 = new MaskBasedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), 
+		true,]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="18">
+<file line="29" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		BooleanConstant.FALSE, 
+		varC,
+		BooleanOperators.and(varA, BooleanOperators.not(varB))
+		);
+		BooleanFunction f1 = new OperatorTreeBF(]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="17">
+<file line="134" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="206" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		}
+		if(first.getSize() != second.getSize()) {
+			return null;]]></codefragment>
+</duplication>
+<duplication lines="7" tokens="17">
+<file line="208" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="109" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+
+	
+	@Override
+	public Iterable<Integer> dontcareIterable() {
+		return Collections.unmodifiableList(dontCares);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="17">
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="228" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		int size = 1 << domain.size();
+		for(int i = 0; i < size; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="17">
+<file line="15" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\Glavni.java"/>
+<file line="35" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<codefragment><![CDATA[		System.out.println("Sortirano: " + QSortParallel.isSorted(data));
+		System.out.println("Vrijeme: " + (t1-t0)+" ms");]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="17">
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);
+		List<Integer> maxterms = Arrays.asList(4, 6);]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="16">
+<file line="254" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="259" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[						} else {
+							m1[i] = value;
+							m2[i] = value;
+						}]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="16">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		MaskValue[] values = {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE, MaskValue.DONT_CARE};
+		Mask m1 = new Mask(values);
+		Mask m2 = Mask.parse("10Xx");]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="16">
+<file line="112" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="115" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="117" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="133" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="136" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="138" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[				new ArrayList<Integer>()
+				);
+		for(int i = 0; i < 8; ++i)
+			assertEquals(true, f2.hasMaxterm(i));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="16">
+<file line="167" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="168" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[				true,
+				new ArrayList<Integer>(Arrays.asList(2, 3)),]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="16">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanFunction f1 = new MaskBasedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC, varD), ]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="16">
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="59" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals("maske ne bi trebale biti jednake ako su im booleani razliciti", false , m1.equals(m2));
+		assertEquals(false, Integer.compare(m1.hashCode(), m2.hashCode()) == 0);]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="15">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[	private BooleanConstant(BooleanValue value) {
+		if(value == null) {
+			throw new NullPointerException();
+		}]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="15">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		if(sources == null || sources.contains(null)) {
+			throw new NullPointerException();
+		}
+		this.sources = new ArrayList<BooleanSource>(sources);]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="15">
+<file line="86" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<codefragment><![CDATA[			throw new IllegalArgumentException();
+		}
+		MaskValue[] values = new MaskValue[size];
+		for (int i = size-1; i >= 0; i--) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="15">
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="30" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[			List<Integer> dontCares) {
+		super();
+		if(name == null || domain == null || domain.contains(null) || ]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="15">
+<file line="143" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<codefragment><![CDATA[		return hasValue(minterm, indexesAreMinterms, this.indexes, this.dontCares);
+	}
+
+
+	@Override
+	public boolean hasMaxterm(int maxterm) {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="15">
+<file line="166" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="114" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="231" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[						for(int j = i + 1; j < size; ++j) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="15">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="23" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanVariable varC = new BooleanVariable("C");
+		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="15">
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);
+		List<Integer> maxterms = Arrays.asList(4, 6);]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="15">
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(4));
+		assertEquals(false, f1.hasMaxterm(3));
+		assertEquals(true, f1.hasDontCare(2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="15">
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals("maska nije jednaka necemu sto nije po tipu razred QMCMask", false, m1.equals(
+							new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE})));]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="41" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="42" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[		List<BooleanVariable> domain = new ArrayList<>();
+		for(BooleanSource source : sources) {
+			if(source.getDomain() != null) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="188" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="290" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		int ret = 0;
+		for(MaskValue value : mask) {
+			if(value == checkMask) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="14">
+<file line="291" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="320" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		for(MaskValue value : mask) {
+			if(value == MaskValue.DONT_CARE) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="14">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[public class IndexedBF implements BooleanFunction {
+
+	private String name;
+	private List<BooleanVariable> domain;
+	private boolean indexesAreMinterms;]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="14">
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<codefragment><![CDATA[				(this.indexes.get(this.indexes.size()-1) >= (1 << domain.size()) || this.indexes.get(0) < 0)) {
+			throw new IllegalArgumentException("Indexes should be in domain range.");]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="14">
+<file line="130" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="103" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		return indexedBF.mintermIterable();
+	}
+
+	@Override
+	public Iterable<Integer> maxtermIterable() {
+		return indexedBF.maxtermIterable();]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="14">
+<file line="135" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		return indexedBF.maxtermIterable();
+	}
+	
+	@Override
+	public Iterable<Integer> dontcareIterable() {
+		return indexedBF.dontcareIterable();]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="14">
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="74" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[	public static MaskBasedBF[] minimize(BooleanFunction bf, boolean getProducts) {
+		List<QMCMask> maske = reduce(makeImplicants(bf, getProducts), getProducts);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="14">
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="40" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(varijabla1.getValue(), bv);
+		assertEquals(varijabla1.getDomain().get(0).getValue(), varijabla1.getValue());]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(m1.hashCode(), m2.hashCode());
+		assertEquals(true, m1.equals(m2));
+		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="14">
+<file line="82" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="142" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, m3.isMoreGeneralThan(m2));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void MasksTest1() {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="30" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="31" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="129" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="158" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="165" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		"f1", 
+		Arrays.asList(varA, varB, varC), 
+		true,]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="107" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="128" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="157" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="164" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="70" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		BooleanFunction f2 = new IndexedBF(
+				"f2", 
+				Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="14">
+<file line="112" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="115" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="117" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="133" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="136" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="138" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[				new ArrayList<Integer>()
+				);
+		for(int i = 0; i < 8; ++i)]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="14">
+<file line="15" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		Mask m = new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE});]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="14">
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		QMCMask m3 = new QMCMask( new Mask(new MaskValue[] {MaskValue.ZERO, MaskValue.ONE, MaskValue.DONT_CARE}));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="14">
+<file line="12" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<file line="18" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<codefragment><![CDATA[	public void isSortedTest1() {
+		int[] a = new int[] {-2, -2, 0, 1, 2, 3, 3, 4, 5};]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="37" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="130" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+	
+	@Override
+	public List<BooleanVariable> getDomain() {
+		return null;]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="303" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="104" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMask.java"/>
+<codefragment><![CDATA[	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="17" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[public class IndexedBF implements BooleanFunction {
+
+	private String name;
+	private List<BooleanVariable> domain;
+	private boolean indexesAreMinterms;]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="13">
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="22" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[				indexes == null || indexes.contains(null)) {
+			throw new NullPointerException();
+		}]]></codefragment>
+</duplication>
+<duplication lines="7" tokens="13">
+<file line="143" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="115" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[		return hasValue(minterm, indexesAreMinterms, this.indexes, this.dontCares);
+	}
+
+
+	@Override
+	public boolean hasMaxterm(int maxterm) {
+		return hasValue(maxterm, !indexesAreMinterms, this.indexes, this.dontCares);]]></codefragment>
+</duplication>
+<duplication lines="7" tokens="13">
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="120" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[		return hasValue(maxterm, !indexesAreMinterms, this.indexes, this.dontCares);
+	}
+	
+
+	@Override
+	public boolean hasDontCare(int dontcare) {
+		return hasValue(dontcare, true, this.dontCares, this.dontCares);]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="13">
+<file line="186" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="98" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		}
+	}
+
+	
+	@Override
+	public Iterable<Integer> mintermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="7" tokens="13">
+<file line="208" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="136" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[	}
+
+
+	
+	@Override
+	public Iterable<Integer> dontcareIterable() {
+		return Collections.unmodifiableList(dontCares);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="13">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[		this.masks = new ArrayList<Mask>(new LinkedHashSet<Mask>(masks));]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="126" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+	@Override
+	public Iterable<Integer> mintermIterable() {
+		return indexedBF.mintermIterable();]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="13">
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="113" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="229" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		for(int i = 0; i < size; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="21" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="41" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="46" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		new BooleanVariable(name);
+	}
+
+	@Test(expected=NullPointerException.class) 
+	public void BooleanVariableSetTest() {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="50" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[	public void MaskTest2() {
+		MaskValue[] values = {MaskValue.ONE, null};]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="13">
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(m1.hashCode(), m2.hashCode());]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="23" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanVariable varC = new BooleanVariable("C");
+		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(4, 6);
+		List<Integer> dontCares = Arrays.asList(2, 3);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="67" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		BooleanVariable varC = new BooleanVariable("C");
+		List<Integer> maxterms = Arrays.asList(0, 1, 5, 7);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="98" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(0, 1, 5, 7);
+		List<Integer> minterms = Arrays.asList(4, 6);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="13">
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(1, 3, 4, 5, 6, 7, 12, 14);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(1, 3, 4, 5, 6, 7, 12, 14);
+		List<Integer> dontCares = Arrays.asList(8, 10);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		QMCMask m3 = new QMCMask( new Mask(new MaskValue[] {MaskValue.ZERO, MaskValue.ONE, MaskValue.DONT_CARE}));
+		assertEquals(false, m1.equals(m3));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="13">
+<file line="73" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0,1,4,5,9,15);
+		List<Integer> dontCares = Arrays.asList(11);]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="13">
+<file line="14" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<file line="20" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\java\sorters\QSortParallelTest.java"/>
+<codefragment><![CDATA[		assertEquals("Za sortirani niz metoda mora vratiti true", true, QSortParallel.isSorted(a));
+	}
+	
+	@Test
+	public void isSortedTest2() {]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="12">
+<file line="37" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="130" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+	
+	@Override
+	public List<BooleanVariable> getDomain() {]]></codefragment>
+</duplication>
+<duplication lines="10" tokens="12">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+	/**
+	 * Returns name of this BooleanVariable.
+	 * @return String name of this BooleanValue.
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="189" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="320" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		for(MaskValue value : mask) {
+			if(value == checkMask) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="210" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="278" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		int maskSize = first.getSize();
+		for(int i = 0; i < maskSize; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="12">
+<file line="222" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="239" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		List<Integer> list = new ArrayList<>();
+
+		for (Mask m : maske) {]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="12">
+<file line="62" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[				masks.add(Mask.parse(string));
+			} catch(Exception e) {
+				throw new IllegalArgumentException("Cannot convert " + string + " to mask.", e);]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="12">
+<file line="187" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="126" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[	}
+
+	
+	@Override
+	public Iterable<Integer> mintermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="12">
+<file line="197" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="131" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="104" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+
+	
+	@Override
+	public Iterable<Integer> maxtermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="92" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[			if((index & 1) == 1) {
+				domain.get(i).setValue(BooleanValue.TRUE);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="107" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="112" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	public Iterable<Integer> mintermIterable() {
+		return Collections.unmodifiableList(createIndexes(BooleanValue.TRUE));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="76" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="228" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		int size = 1 << domain.size();
+		for(int i = 0; i < size; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="9" tokens="12">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperators.java"/>
+<file line="37" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperators.java"/>
+<codefragment><![CDATA[		return new BooleanOperatorAND(Arrays.asList(source));
+	}
+	
+	/**
+	 * Factory method for operator OR.
+	 * @param source
+	 * @return new {@link BooleanOperatorOR}
+	 */
+	public static BooleanOperator or(BooleanSource ... source) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="204" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="315" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[			List<QMCMask> curr = new ArrayList<>();
+			for(QMCMask maska : maske) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\QSortParallel.java"/>
+<file line="126" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\QSortParallel.java"/>
+<codefragment><![CDATA[			if(array[startIndex] > array[endIndex]) {
+				swap(array, startIndex, endIndex);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="12">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="15" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		MaskValue[] values = {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE, MaskValue.DONT_CARE};]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="78" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="79" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(true, m1.equals(m2));
+		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="12">
+<file line="30" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="49" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="100" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="126" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="152" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanFunction f1 = new IndexedBF(
+		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="31" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="129" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="158" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="165" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		"f1", 
+		Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="12">
+<file line="31" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="81" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="132" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="158" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		);
+		MaskBasedBF[] fje = QMCMinimizer.minimize(f1, true);]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="11">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<codefragment><![CDATA[			if(value == null) {
+				throw new NullPointerException();
+			}
+		}]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="11">
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[			} else if(maskToParse.charAt(i) == '1') {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="278" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="228" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		int size = this.getSize();
+		for (int i = 0; i < size; i++) {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="11">
+<file line="294" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="323" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[			} else if (value == MaskValue.ONE) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[	public IndexedBF(String name, List<BooleanVariable> domain,
+			boolean indexesAreMinterms, List<Integer> indexes,]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="11">
+<file line="144" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="116" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+
+
+	@Override
+	public boolean hasMaxterm(int maxterm) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="11">
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="121" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="78" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	}
+	
+
+	@Override
+	public boolean hasDontCare(int dontcare) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="159" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="252" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="285" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		Iterator<Integer> it = getProducts ? bf.maxtermIterable().iterator() : bf.mintermIterable().iterator();
+		while(it.hasNext()) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\QSortParallel.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\java\sorters\QSortParallel.java"/>
+<codefragment><![CDATA[				if(startIndex < i) {
+					QSortJob job = new QSortJob(array, startIndex, i-1);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="18" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="49" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[	@Test(expected=NullPointerException.class)
+	public void BooleanVariableTest() {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="77" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(true, m1.equals(m2));
+		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="76" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(false, m1.equals(m2));
+		assertEquals(m3, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="87" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="88" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		Masks.fromStrings("100", "1Xx", "100XxA");
+		Masks.fromIndexes(1, 0, 1, 2);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="68" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="23" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="72" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="98" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="149" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		BooleanVariable varC = new BooleanVariable("C");
+		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="67" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="33" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(0, 1, 5, 7);
+		List<Integer> maxterms = Arrays.asList(4, 6);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="69" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="73" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="150" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> maxterms = Arrays.asList(4, 6);
+		List<Integer> dontCares = Arrays.asList(2, 3);]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="11">
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="49" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="80" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="85" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="90" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="39" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="49" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[			assertEquals(minterms.get(j), i);
+			j++;
+		}]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="11">
+<file line="60" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		System.out.println(f1.getValue());
+	}
+	
+	@Test
+	public void IndexedBFtest2() {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="11">
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals("maska nije jednaka necemu sto nije po tipu razred QMCMask", false, m1.equals(
+							new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE})));]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="11">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="60" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(true, Integer.compare(m1.hashCode(), m2.hashCode()) == 0);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="11">
+<file line="99" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		List<Integer> minterms = Arrays.asList(4,5,6,7,8,9,10,11,13,14);]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="10">
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="102" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Masks.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<codefragment><![CDATA[		if(value == null) {
+			throw new NullPointerException();
+		}]]></codefragment>
+</duplication>
+<duplication lines="4" tokens="10">
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="24" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="34" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="32" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		if(value == null) {
+			throw new NullPointerException();
+		}
+		this.value = value;]]></codefragment>
+</duplication>
+<duplication lines="8" tokens="10">
+<file line="29" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanConstant.java"/>
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanOperator.java"/>
+<file line="38" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\BooleanVariable.java"/>
+<file line="73" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<file line="25" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[	}
+	
+	/**
+	 * Value of this constant.
+	 */
+	@Override
+	public BooleanValue getValue() {
+		return this.value;]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="10">
+<file line="105" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="207" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<codefragment><![CDATA[		if(this.getSize() != mask.getSize()) {
+			return false;
+		}
+		
+		int size = this.getSize();]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="210" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="278" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="123" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="76" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="228" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		int maskSize = first.getSize();
+		for(int i = 0; i < maskSize; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="6" tokens="10">
+<file line="212" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="254" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[			if(first.getValue(i) != second.getValue(i)) {
+				return false;
+			}
+		}
+		return true;
+	}]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="10">
+<file line="285" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\Mask.java"/>
+<file line="91" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMask.java"/>
+<codefragment><![CDATA[		return Integer.valueOf(result / 2);
+	}
+	
+	@Override
+	public int hashCode() {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="30" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[	public IndexedBF(String name, List<BooleanVariable> domain,]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<codefragment><![CDATA[		this.indexes = new ArrayList<Integer>();
+		this.dontCares = new ArrayList<Integer>();]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="60" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\IndexedBF.java"/>
+<codefragment><![CDATA[		if(this.indexes.size() > 0 &&
+				(this.indexes.get(this.indexes.size()-1) >= (1 << domain.size()) || this.indexes.get(0) < 0)) {]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="10">
+<file line="130" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="135" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[		return indexedBF.mintermIterable();
+	}
+
+	@Override
+	public Iterable<Integer> maxtermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="162" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="124" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="113" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="229" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[				for(i = 0; i < size; ++i) {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="167" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="168" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[							values1[j] = tempMask.getValue(j);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="174" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<file line="175" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\MaskBasedBF.java"/>
+<codefragment><![CDATA[					values1[i] = tempMask.getValue(i);]]></codefragment>
+</duplication>
+<duplication lines="5" tokens="10">
+<file line="103" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\fimpl\OperatorTreeBF.java"/>
+<codefragment><![CDATA[		return Collections.unmodifiableList(createIndexes(BooleanValue.TRUE));
+	}
+
+	@Override
+	public Iterable<Integer> maxtermIterable() {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="43" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="46" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorAND.java"/>
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorOR.java"/>
+<codefragment><![CDATA[			if(source.getValue() == BooleanValue.FALSE) {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="45" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<file line="48" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\opimpl\BooleanOperatorNOT.java"/>
+<codefragment><![CDATA[		if(value.getValue() == BooleanValue.FALSE)]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="64" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMask.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMask.java"/>
+<codefragment><![CDATA[			if(((index & 1) == 1 && maska.getValue(pos) == MaskValue.ZERO) ||]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="53" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="215" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		} else {
+			List<List<QMCMask>> fromPyne = pyne(maske, indexesNotCovered(primary, bf, getProducts));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="75" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="110" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="227" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		List<QMCMask> maske = new ArrayList<>();
+		int size = bf.getDomain().size();]]></codefragment>
+</duplication>
+<duplication lines="11" tokens="10">
+<file line="84" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="144" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[		}
+		return maske;
+	}
+	
+	/**
+	 * Metoda koja reducira dane maske po QMC algoritmu.
+	 * @param maske - dane maske koje treba spojiti
+	 * @param getProducts - treba li grupirati po nulama ili jedinicama
+	 * @return - Lista novih maski koje pokrivaju dane maske
+	 */
+	private static List<QMCMask> reduce(List<QMCMask> maske, boolean getProducts) {]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="155" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[	private static List<QMCMask> reduce(List<QMCMask> maske, boolean getProducts) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="137" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="163" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="175" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[			for(QMCMask mask : maske) {
+				if(flags[i] == false) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="210" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<file line="217" path="C:\FER\Java\workspaceNew\HW09-2\src\main\java\hr\fer\zemris\bool\qmc\QMCMinimizer.java"/>
+<codefragment><![CDATA[			if(prviProlaz) {
+				for(QMCMask maska : curr) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="76" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals(true, m1.equals(m2));
+		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="66" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="80" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(true, m1.equals(m2));
+		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="67" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="77" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(null, Mask.combine(m1, m2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="77" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="78" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<file line="79" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\BoolTester.java"/>
+<codefragment><![CDATA[		assertEquals(m3, Mask.combine(m1, m2));
+		assertEquals(null, Mask.combine(m2, m3));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="37" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="42" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="78" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="83" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="88" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="37" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="42" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="47" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="41" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="46" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="51" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		int j = 0;
+		for(Integer i : f1.mintermIterable()) {]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="93" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="53" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMinterm(0));
+		assertEquals(false, f1.hasMinterm(2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="95" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="53" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="59" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMinterm(0));
+		assertEquals(false, f1.hasMinterm(2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="53" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="94" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="60" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(false, f1.hasMinterm(2));
+		assertEquals(true, f1.hasMaxterm(4));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="53" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="60" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(false, f1.hasMinterm(2));
+		assertEquals(true, f1.hasMaxterm(4));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="95" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(4));
+		assertEquals(false, f1.hasMaxterm(3));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="93" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(4));
+		assertEquals(false, f1.hasMaxterm(3));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="96" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(false, f1.hasMaxterm(3));
+		assertEquals(true, f1.hasDontCare(2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="56" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="97" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="57" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasDontCare(2));
+		assertEquals(false, f1.hasDontCare(5));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="108" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="129" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="151" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="158" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="165" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="27" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="71" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="26" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="50" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="76" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="101" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="127" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="153" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[				"f2", 
+				Arrays.asList(varA, varB, varC), ]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="10">
+<file line="111" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="132" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<file line="154" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\IndexedBFTests.java"/>
+<codefragment><![CDATA[				new ArrayList<Integer>(),
+				new ArrayList<Integer>()
+				);]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="59" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(false, f1.hasMinterm(1));
+		assertEquals(true, f1.hasMaxterm(1));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="55" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\MaskedBFTests.java"/>
+<file line="59" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<codefragment><![CDATA[		assertEquals(true, f1.hasMaxterm(1));
+		assertEquals(false, f1.hasMaxterm(2));]]></codefragment>
+</duplication>
+<duplication lines="2" tokens="10">
+<file line="52" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\fimpl\OperatorTreeTests.java"/>
+<file line="36" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="61" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="87" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="112" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="138" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<file line="164" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMinimizerTest.java"/>
+<codefragment><![CDATA[		for(Integer i : f1.dontcareIterable()) {
+			System.out.println(i);]]></codefragment>
+</duplication>
+<duplication lines="1" tokens="10">
+<file line="15" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="28" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="44" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="58" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="65" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		Mask m = new Mask(new MaskValue[] {MaskValue.ONE, MaskValue.ZERO, MaskValue.DONT_CARE});]]></codefragment>
+</duplication>
+<duplication lines="3" tokens="10">
+<file line="21" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<file line="54" path="C:\FER\Java\workspaceNew\HW09-2\src\test\java\hr\fer\zemris\bool\qmc\QMCMaskTest.java"/>
+<codefragment><![CDATA[		assertEquals("Postavljeni dont care je bio true.", true, m2.isDontCare());
+		m2.setDontCare(false);
+		assertEquals(m1, m2);]]></codefragment>
+</duplication>
+</pmd-cpd>

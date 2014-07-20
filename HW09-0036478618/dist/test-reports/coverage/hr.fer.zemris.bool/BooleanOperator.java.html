@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BooleanOperator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.bool</a> &gt; <span class="el_source">BooleanOperator.java</span></div><h1>BooleanOperator.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.bool;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * BooleanOperator is an abstraction over boolean operators. It has private list of sources based on 
+ * which final result is calculated; this list must be provided through BooleanOperator's protected constructor 
+ * as its only argument. Operators determine their domain by inspecting domains of given sources and 
+ * producing an union.
+ * @author Ivan Krpelnik
+ *
+ */
+public abstract class BooleanOperator implements BooleanSource {
+
+	private List&lt;BooleanSource&gt; sources;
+	
+	/**
+	 * Constructor - sets private list sources.
+	 * @param sources - list to be copied to this.sources.
+	 */
+<span class="fc" id="L23">	protected BooleanOperator(List&lt;BooleanSource&gt; sources) {</span>
+<span class="pc bpc" id="L24" title="2 of 4 branches missed.">		if(sources == null || sources.contains(null)) {</span>
+<span class="nc" id="L25">			throw new NullPointerException();</span>
+		}
+<span class="fc" id="L27">		this.sources = new ArrayList&lt;BooleanSource&gt;(sources);</span>
+<span class="fc" id="L28">	}</span>
+	
+	/**
+	 * Getter for sources of this operator.
+	 * @return List&lt;BooleanSource&gt; sources.
+	 */
+	protected List&lt;BooleanSource&gt; getSources() {
+<span class="fc" id="L35">		return Collections.unmodifiableList(sources);</span>
+	}
+	
+	/**
+	 * Should be implemented.
+	 * @return null or value of this BooleanOperator.
+	 */
+	@Override
+	public BooleanValue getValue() {
+<span class="nc" id="L44">		return null;</span>
+	}
+
+	/**
+	 * Returns union sources's domain.
+	 * @return List&lt;BooleanVariabl&gt; domain.
+	 */
+	@Override
+	public List&lt;BooleanVariable&gt; getDomain() {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if(sources == null) {</span>
+<span class="nc" id="L54">			return null;</span>
+		}
+<span class="fc" id="L56">		List&lt;BooleanVariable&gt; domain = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for(BooleanSource source : sources) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if(source.getDomain() != null) {</span>
+<span class="fc" id="L59">				domain.addAll(source.getDomain());</span>
+			}
+<span class="fc" id="L61">		}</span>
+<span class="fc" id="L62">		return Collections.unmodifiableList(domain);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

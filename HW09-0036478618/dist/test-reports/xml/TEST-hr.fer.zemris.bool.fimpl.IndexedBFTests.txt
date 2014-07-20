@@ -1,0 +1,11 @@
+Testsuite: hr.fer.zemris.bool.fimpl.IndexedBFTests
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,018 sec
+------------- Standard Output ---------------
+DONT_CARE
+------------- ---------------- ---------------
+
+Testcase: IndexedBFtest1 took 0,006 sec
+Testcase: IndexedBFtest2 took 0 sec
+Testcase: IndexedBFtest3 took 0 sec
+Testcase: IndexedBFtest4 took 0 sec
+Testcase: IndexedBFtest5 took 0 sec

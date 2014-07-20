@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="false">
+
+  <display-name>Glasanje</display-name>
+  <description>
+  	Aplikacija za glasanje.
+  </description>
+
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.ListajServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>init</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.InitServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>glasanje</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.GlasanjeServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>glasaj</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.GlasanjeGlasajServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>rezultati</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.GlasanjeRezultatiServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ggrafika</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.GlasanjeGrafikaServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>gxls</servlet-name>
+		<servlet-class>hr.fer.zemris.java.aplikacija5.servleti.GlasanjeXLSServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>glasanje</servlet-name>
+		<url-pattern>/servleti/glasanje</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/servleti/index</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>init</servlet-name>
+		<url-pattern>/servleti/init</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet-mapping>
+		<servlet-name>glasaj</servlet-name>
+		<url-pattern>/servleti/glasanje-glasaj</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>rezultati</servlet-name>
+		<url-pattern>/servleti/glasanje-rezultati</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ggrafika</servlet-name>
+		<url-pattern>/servleti/glasanje-grafika</url-pattern>
+	</servlet-mapping>
+		
+	<servlet-mapping>
+		<servlet-name>gxls</servlet-name>
+		<url-pattern>/servleti/glasanje-xls</url-pattern>
+	</servlet-mapping>	
+</web-app>

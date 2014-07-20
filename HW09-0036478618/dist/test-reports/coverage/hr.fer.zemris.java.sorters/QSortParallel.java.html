@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>QSortParallel.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.java.sorters</a> &gt; <span class="el_source">QSortParallel.java</span></div><h1>QSortParallel.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.java.sorters;
+
+<span class="nc" id="L3">public class QSortParallel {</span>
+
+	/**
+	 * Prag koji govori koliko elemenata u podpolju minimalno
+	 * mora biti da bi se sortiranje nastavilo paralelno;
+	 * ako elemenata ima manje, algoritam prelazi na klasično
+	 * rekurzivno (slijedno) sortiranje.
+	 */
+	private final static int P_THRESHOLD = 6000;
+	/**
+	 * Prag za prekid rekurzije. Ako elemenata ima više od
+	 * ovoga, quicksort nastavlja rekurzivnu dekompoziciju.
+	 * U suprotnom ostatak sortira algoritmom umetanja.
+	 */
+	private final static int CUT_OFF = 5;
+	/**
+	 * Sučelje prema klijentu: prima polje i vraća se 
+	 * tek kada je polje sortirano. Primjenjujući gornje
+	 * pragove najprije posao paralelizira a kada posao
+	 * postane dovoljno mali, rješava ga slijedno.
+	 * 
+	 * @param array polje koje treba sortirati
+	 */
+	
+	public static void sort(int[] array) {
+<span class="fc" id="L28">		new QSortJob(array, 0, array.length-1).run();</span>
+<span class="fc" id="L29">	}</span>
+	
+	/**
+	 * Model posla sortiranja podpolja čiji su elementi na pozicijama
+	 * koje su veće ili jednake &lt;code&gt;startIndex&lt;/code&gt; i manje
+	 * ili jednake &lt;code&gt;endIndex&lt;/code&gt;.
+	 */
+<span class="nc" id="L36">	static class QSortJob implements Runnable {</span>
+		private int[] array;
+		private int startIndex;
+		private int endIndex;
+		public QSortJob(int[] array, int startIndex, int endIndex) {
+<span class="fc" id="L41">			super();</span>
+<span class="fc" id="L42">			this.array = array;</span>
+<span class="fc" id="L43">			this.startIndex = startIndex;</span>
+<span class="fc" id="L44">			this.endIndex = endIndex;</span>
+<span class="fc" id="L45">		}</span>
+		
+		@Override
+		public void run() {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			if(endIndex &lt;= startIndex) {</span>
+<span class="fc" id="L50">				return;</span>
+			}
+<span class="fc bfc" id="L52" title="All 2 branches covered.">			if(endIndex-startIndex+1 &gt; CUT_OFF) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">				boolean doInParallel = endIndex - startIndex + 1 &gt; P_THRESHOLD;</span>
+<span class="fc" id="L54">				int i = partitioning(array[selectPivot()]);</span>
+<span class="fc" id="L55">				Thread t1 = null;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">				if(startIndex &lt; i) {</span>
+<span class="fc" id="L57">					QSortJob job = new QSortJob(array, startIndex, i-1);</span>
+<span class="fc" id="L58">					t1 = executeJob(doInParallel, job);</span>
+				}
+<span class="fc" id="L60">				Thread t2 = null;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">				if(endIndex &gt; i) {</span>
+<span class="fc" id="L62">					QSortJob job = new QSortJob(array, i+1, endIndex);</span>
+<span class="fc" id="L63">					t2 = executeJob(doInParallel, job);</span>
+				}
+<span class="fc" id="L65">				joinThread(t1);</span>
+<span class="fc" id="L66">				joinThread(t2);</span>
+<span class="fc" id="L67">			} else {</span>
+				int j, temp;
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                for (int i = startIndex + 1; i &lt;= endIndex; i++) {</span>
+<span class="fc" id="L70">                        temp = array[i];</span>
+<span class="fc" id="L71">                        j = i;</span>
+<span class="fc bfc" id="L72" title="All 4 branches covered.">                        while (j &gt; startIndex &amp;&amp; array[j - 1] &gt; temp) {</span>
+<span class="fc" id="L73">                                array[j] = array[j - 1];</span>
+<span class="fc" id="L74">                                j--;</span>
+                        }
+<span class="fc" id="L76">                        array[j] = temp;</span>
+                }
+			}
+<span class="fc" id="L79">		}</span>
+		
+		private void joinThread(Thread t) {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if(t == null) {</span>
+<span class="fc" id="L83">				return;</span>
+			}
+			while(true) {
+				try {
+<span class="fc" id="L87">					t.join();</span>
+<span class="fc" id="L88">					return;</span>
+<span class="nc" id="L89">				} catch (InterruptedException e) {}</span>
+			}
+		}
+		
+		/**
+		 * Direktno izvodi zadani posao pozivom run() i tada vraća &lt;code&gt;null&lt;/code&gt;
+		 * ili pak stvara novu dretvu, njoj daje taj posao i pokreće je te vraća
+		 * referencu na stvorenu dretvu (u tom slučaju ne čeka da posao završi).
+		 * @param doInParallel treba li posao pokrenuti u novoj dretvi
+		 * @param job posao
+		 * @return &lt;code&gt;null&lt;/code&gt; ili referencu na pokrenutu dretvu
+		 */
+		private Thread executeJob(boolean doInParallel, QSortJob job) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if(doInParallel) {</span>
+<span class="fc" id="L103">				Thread t = new Thread(job);</span>
+<span class="fc" id="L104">				t.start();</span>
+<span class="fc" id="L105">				return t;</span>
+			}
+<span class="fc" id="L107">			job.run();</span>
+<span class="fc" id="L108">			return null;</span>
+		}
+		/**
+		 * Odabir pivota metodom medijan-od-tri u dijelu polja 
+		 * &lt;code&gt;array&lt;/code&gt; koje je ograđeno indeksima
+		 * &lt;code&gt;startIndex&lt;/code&gt; i &lt;code&gt;endIndex&lt;/code&gt;
+		 * (oba uključena).
+		 * 
+		 * @return vraća indeks na kojem se nalazi odabrani pivot
+		 */
+		public int selectPivot() {
+<span class="fc" id="L119">			int mid = startIndex + (endIndex - startIndex) / 2;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if(array[startIndex] &gt; array[mid]) {</span>
+<span class="fc" id="L121">				swap(array, startIndex, mid);</span>
+			}
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			if(array[startIndex] &gt; array[endIndex]) {</span>
+<span class="fc" id="L124">				swap(array, startIndex, endIndex);</span>
+			}
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if(array[mid] &gt; array[endIndex]) {</span>
+<span class="fc" id="L127">				swap(array, mid, endIndex);</span>
+			}
+<span class="fc" id="L129">			swap(array, mid, endIndex-1);</span>
+<span class="fc" id="L130">			return endIndex-1;</span>
+		}
+		
+		private int partitioning(int pivot) {
+<span class="fc" id="L134">			int i = startIndex;</span>
+<span class="fc" id="L135">			int j = endIndex-1;</span>
+			while(true) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">				while(array[++i] &lt; pivot);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">				while(array[--j] &gt; pivot);</span>
+				
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				if(i &gt;= j) {</span>
+<span class="fc" id="L141">					break;</span>
+				}
+<span class="fc" id="L143">				swap(array, i, j);</span>
+			}
+<span class="fc" id="L145">			swap(array, i, endIndex-1);</span>
+<span class="fc" id="L146">			return i;</span>
+		}
+		/**
+		 * U predanom polju &lt;code&gt;array&lt;/code&gt; zamjenjuje
+		 * elemente na pozicijama &lt;code&gt;i&lt;/code&gt; i &lt;code&gt;j&lt;/code&gt;. 
+		 * @param array polje u kojem treba zamijeniti elemente
+		 * @param i prvi indeks
+		 * @param j drugi indeks
+		 */
+		public static void swap(int[] array, int i, int j) {
+<span class="fc" id="L156">			int temp = array[i];</span>
+<span class="fc" id="L157">			array[i] = array[j];</span>
+<span class="fc" id="L158">			array[j] = temp;</span>
+<span class="fc" id="L159">		}</span>
+	}
+	
+	/**
+	 * Pomoćna metoda koja provjerava je li predano polje 
+	 * doista sortirano uzlazno.
+	 * 
+	 * @param array polje
+	 * @return &lt;code&gt;true&lt;/code&gt; ako je, &lt;code&gt;false&lt;/code&gt; inače
+	 */
+	public static boolean isSorted(int[] array) {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for(int i = 1; i &lt; array.length; ++i) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if(array[i] &lt; array[i-1]) {</span>
+<span class="fc" id="L172">				return false;</span>
+			}
+		}
+<span class="fc" id="L175">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

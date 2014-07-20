@@ -1,0 +1,12 @@
+Testsuite: hr.fer.zemris.bool.BoolTester
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,086 sec
+
+Testcase: BooleanVariableTest1 took 0,004 sec
+Testcase: BooleanVariableSetTest took 0,001 sec
+Testcase: BooleanVariableTest took 0,001 sec
+Testcase: MasksTest1 took 0,004 sec
+Testcase: MasksTest2 took 0 sec
+Testcase: MaskTest1 took 0 sec
+Testcase: MaskTest2 took 0 sec
+Testcase: MaskTest3 took 0 sec
+Testcase: MaskTest4 took 0,001 sec

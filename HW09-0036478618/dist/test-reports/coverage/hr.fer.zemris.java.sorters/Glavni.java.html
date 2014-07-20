@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Glavni.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW09-0036478618</a> &gt; <a href="index.source.html" class="el_package">hr.fer.zemris.java.sorters</a> &gt; <span class="el_source">Glavni.java</span></div><h1>Glavni.java</h1><pre class="source lang-java linenums">package hr.fer.zemris.java.sorters;
+import java.util.Random;
+<span class="nc" id="L3">public class Glavni {</span>
+
+	public static void main(String[] args) {
+<span class="nc" id="L6">		final int SIZE = 150000;</span>
+<span class="nc" id="L7">		Random rand = new Random();</span>
+<span class="nc" id="L8">		int[] data = new int[SIZE];</span>
+<span class="nc bnc" id="L9" title="All 2 branches missed.">		for(int i = 0; i &lt; data.length; i++) {</span>
+<span class="nc" id="L10">			data[i] = rand.nextInt();</span>
+		}
+<span class="nc" id="L12">		long t0 = System.currentTimeMillis();</span>
+<span class="nc" id="L13">		QSortParallel.sort(data);</span>
+<span class="nc" id="L14">		long t1 = System.currentTimeMillis();</span>
+<span class="nc" id="L15">		System.out.println(&quot;Sortirano: &quot; + QSortParallel.isSorted(data));</span>
+<span class="nc" id="L16">		System.out.println(&quot;Vrijeme: &quot; + (t1-t0)+&quot; ms&quot;);</span>
+<span class="nc" id="L17">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

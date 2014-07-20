@@ -1,0 +1,372 @@
+﻿<project name="HW16-0036478618" default="jar" basedir="." xmlns:cs="antlib:com.puppycrawl.tools.checkstyle" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<description>
+		Build datoteka za projekt HW16-0036478618.
+	</description>
+
+	<!-- Postavljanje globalnih varijabli -->
+	<property file="config.properties"/>
+	<property name="src" location="src"/>
+	<property name="src.java" location="${src}/main/java"/>
+	<property name="src.test" location="${src}/test/java"/>
+	<property name="build" location="build"/>
+	<property name="build.classes" location="/web/aplikacija5/WEB-INF/classes"/>
+	<property name="build.test" location="${build}/test"/>
+	<property name="dist"  location="dist"/>
+	<property name="dist.lib"  location="${dist}/lib"/>
+	<property name="program" 
+		value="" />
+	
+	<!-- Definiranje naredbi koje pokreću Jococo alat -->
+	<taskdef uri="antlib:org.jacoco.ant"
+		resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${jacoco.home}/lib/jacocoant.jar"/>
+	</taskdef>
+	
+	<!-- Definiranje naredbe koje pokreću CheckStyle alat -->
+	<taskdef uri="antlib:com.puppycrawl.tools.checkstyle" 
+		resource="checkstyletask.properties"
+		classpath="${checkstyle.home}/${checkstyle.jar}"/>
+	
+	<!-- Definiranje staze do PMD biblioteka: -->
+	<path id="pmd.lib" >
+		<fileset dir="${pmd.home}/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- Definiranje naredbi koje pokreću FindBugs alat -->
+	<taskdef name="findbugs"
+			classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+		<classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
+	</taskdef>
+
+	<!-- Definiranje naredbi koje pokreću PMD analize -->
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"
+		classpathref="pmd.lib" />
+	<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask"
+		classpathref="pmd.lib" />
+	
+	<path id="compile.path">
+		<pathelement location="${build.classes}"/>
+	</path>
+	
+	<path id="test.path">
+		<path refid="compile.path"/>
+		<pathelement location="${build.test}"/>
+		<fileset dir="${junit.home}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<!-- Stvaranje vremenske oznake -->
+		<tstamp/>
+		<!-- Stvaranje potrebnih direktorija -->
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target name="compile" depends="init" 
+		description="Prevođenje izvornog koda">
+		<mkdir dir="${build.classes}"/>
+		<!-- Prevođenje Java koda iz ${src} u ${build} -->
+		<javac srcdir="${src.java}" destdir="${build.classes}" 
+			encoding="UTF-8" debug="on" 
+			debuglevel="lines,vars,source" 
+			includeAntRuntime="false">
+			<classpath>
+				<pathelement path="weblib/jsp-api.jar"/>
+				<pathelement path="weblib/servlet-api.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/antlr-2.7.7.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/c3p0-0.9.2.1.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/derbyclient.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/dom4j-1.6.1.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/ehcache-core-2.4.3.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-c3p0-4.3.5.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-commons-annotations-4.0.4.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-core-4.3.5.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-ehcache-4.3.5.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-entitymanager-4.3.5.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/jandex-1.1.0.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/javassist-3.18.1-GA.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/jboss-logging-3.1.3.GA.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/jboss-logging-annotations-1.2.0.Beta1.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/mchange-commons-java-0.2.3.4.jar"/>
+				<pathelement path="web/aplikacija5/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+			</classpath>
+		</javac>
+		
+		<copy todir="${build.classes}">
+			<fileset dir="${src.java}" excludes="**/*.java" />
+		</copy>
+			
+		<!-- Stvaranje direktorija za distribuciju -->
+		<mkdir dir="${dist.lib}"/>
+
+		<!-- Arhiviranje svega iz ${build} u arhivu 
+			${ant.project.name}-${DSTAMP}.jar -->
+		<jar jarfile="${dist.lib}/${ant.project.name}-${DSTAMP}.jar" 
+			basedir="${build.classes}">
+			<manifest>
+				<attribute name="Main-Class" value="${program}"/>
+			</manifest>
+		</jar>
+		
+	</target>
+	
+	<target name="compile-tests" depends="compile"
+		description="Prevođenje izvornog koda testova">
+		<mkdir dir="${build.test}"/>
+		<!-- Prevođenje Java koda iz ${src} u ${build} -->
+	<javac srcdir="${src.test}" destdir="${build.test}"
+		classpathref="test.path"
+		encoding="UTF-8" debug="on"
+		debuglevel="lines,vars,source"
+		includeAntRuntime="false" />
+	</target>
+
+	<target name="run" depends="compile" 
+		description="Pokretanje programa">
+		<!-- Poziv virtualnog stroja koji će pokrenuti 
+			napisani program. -->
+			<java classname="${program}" classpath="${build.classes}" 
+				fork="true">
+				<arg value="${path}"/>
+				<jvmarg value="-Dfile.encoding=IBM852" />
+			</java>
+		
+	</target>
+	
+	
+	<target name="run-tests" depends="compile-tests"
+		description="Izvođenje definiranih testova" >
+		<mkdir dir="${dist}/test-reports/xml"/>
+		<mkdir dir="${dist}/test-reports/coverage"/>
+		<mkdir dir="${dist}/test-reports/html"/>
+		<jacoco:coverage destfile="${dist}/test-reports/xml/jacoco.exec">
+			<junit printsummary="yes" haltonfailure="yes" fork="true"
+				forkmode="once">
+				<classpath refid="test.path" />
+				<formatter type="plain"/>
+				<formatter type="xml"/>
+				<batchtest fork="yes" todir="${dist}/test-reports/xml">
+					<fileset dir="${src.test}">
+						<include name="**/*Test*.java"/>
+					</fileset>
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+		<junitreport todir="${dist}/test-reports/xml">
+			<fileset dir="${dist}/test-reports/xml">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${dist}/test-reports/html"/>
+		</junitreport>
+		<!-- Generiraj izvještaj o pokrivenosti koda testovima -->
+		<jacoco:report>
+			<executiondata>
+				<file file="${dist}/test-reports/xml/jacoco.exec"/>
+			</executiondata>
+			<structure name="${ant.project.name}">
+				<classfiles>
+					<fileset dir="${build.classes}"/>
+					<fileset dir="${build.test}"/>
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.java}"/>
+					<fileset dir="${src.test}"/>
+				</sourcefiles>
+			</structure>
+			<html destdir="${dist}/test-reports/coverage"/>
+		</jacoco:report>
+	</target>
+	
+	<target name="jar" depends="compile" 
+		description="Pakiranje programa u arhivu JAR" >
+		<!-- Stvaranje direktorija za distribuciju -->
+		<mkdir dir="${dist.lib}"/>
+
+		<!-- Arhiviranje svega iz ${build} u arhivu 
+			${ant.project.name}-${DSTAMP}.jar -->
+		<jar jarfile="${dist.lib}/hw11_prvi.jar">
+			<fileset dir="${build.classes}"/>
+			<fileset dir="${src.java}" includes="**/prijevodi**"/>
+			<manifest>
+				<attribute name="Main-Class" value="${program1}"/>
+			</manifest>
+		</jar>
+		
+		<jar jarfile="${dist.lib}/hw11_drugi.jar">
+			<fileset dir="${build.classes}"/>
+			<fileset dir="${src.java}" includes="**/prijevodi**"/>
+			<manifest>
+				<attribute name="Main-Class" value="${program2}"/>
+			</manifest>
+		</jar>
+		
+	</target>
+	
+	<target name="war" depends="compile">
+		<!-- Stvaranje direktorija za distribuciju -->
+		<mkdir dir="${dist.lib}"/>
+		
+		<war destfile="${dist.lib}/aplikacija5.war" webxml="web/aplikacija5/WEB-INF/web.xml">
+			<fileset dir="web/aplikacija5">
+				<include name="**/*.*"/>
+			</fileset>
+			<lib dir="web/aplikacija5/WEB-INF/lib">
+			</lib>
+			<classes dir="web/aplikacija5/WEB-INF/classes"/>
+		</war>
+	</target>
+	
+	<target name="clean" 
+		description="Brisanje generiranog sadržaja" >
+		<!-- Obriši direktorije ${build} i ${dist} -->
+		<delete dir="${build}" failonerror="false" />
+		<delete dir="${dist}" failonerror="false" />
+		
+	</target>
+	
+	<target name="jarrun" depends="jar" 
+		description="Pokretanje programa iz JAR-a">
+		<!-- Poziv virtualnog stroja koji će pokrenuti 
+			napisani program. -->
+		<java classname="${program}" 
+			classpath="${dist.lib}/${ant.project.name}-${DSTAMP}.jar" 
+			fork="true">
+			<jvmarg value="-Dfile.encoding=IBM852" />
+		</java>
+	</target>
+
+	<target name="javadoc" depends="compile" description="Generiranje dokumentacije" >
+		<!-- Stvaranje direktorija za distribuciju -->
+		<mkdir dir="${dist}/doc"/>
+		<javadoc packagenames="hr.*"
+			sourcepath="${src.java}"
+			Overview="${src.java}/overview.html"
+			defaultexcludes="yes"
+			destdir="${dist}/doc"
+			Encoding="UTF-8"
+			docencoding="UTF-8"
+			charset="UTF-8"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="Dokumentacija programa">
+			<doctitle><![CDATA[<h1>Prvi program</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2013 ACME. All Rights Reserved.</i>]]></bottom>
+		</javadoc>	
+	</target>
+	
+	<!-- ****************************************************************** -->
+	<target name="findbugs" depends="compile">
+		<mkdir dir="${dist}/findbugs/xml"/>
+		<mkdir dir="${dist}/findbugs/html"/>
+			<findbugs home="${findbugs.home}"
+				output="xml:withMessages"
+				outputFile="${dist}/findbugs/xml/report.xml"
+				workHard="true" effort="max"
+				projectName="${ant.project.name}">
+				<sourcePath path="${src.java}" />
+				<class location="${build.classes}" />
+			</findbugs>
+			<xslt includes="report.xml" basedir="${dist}/findbugs/xml"
+				destdir="${dist}/findbugs/html" extension=".html"
+				style="${findbugs.home}/src/xsl/fancy.xsl" >
+			<classpath>
+				<fileset dir="${xalan.home}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</xslt>
+	</target>
+	
+	<!-- ****************************************************************** -->
+	<target name="pmd" depends="compile">
+		<mkdir dir="${dist}/pmd/xml"/>
+		<mkdir dir="${dist}/pmd/html"/>
+		<pmd shortFilenames="true" encoding="UTF-8">
+			<ruleset>rulesets/java/basic.xml</ruleset>
+			<ruleset>rulesets/java/braces.xml</ruleset>
+			<ruleset>rulesets/java/codesize.xml</ruleset>
+			<ruleset>rulesets/java/controversial.xml</ruleset>
+			<ruleset>rulesets/java/design.xml</ruleset>
+			<ruleset>rulesets/java/finalizers.xml</ruleset>
+			<ruleset>rulesets/java/imports.xml</ruleset>
+			<ruleset>rulesets/java/naming.xml</ruleset>
+			<ruleset>rulesets/java/optimizations.xml</ruleset>
+			<ruleset>rulesets/java/strictexception.xml</ruleset>
+			<ruleset>rulesets/java/strings.xml</ruleset>
+			<ruleset>rulesets/java/sunsecure.xml</ruleset>
+			<ruleset>rulesets/java/typeresolution.xml</ruleset>
+			<ruleset>rulesets/java/unusedcode.xml</ruleset>
+			<ruleset>rulesets/java/unnecessary.xml</ruleset>
+			<formatter type="xml" toFile="${dist}/pmd/xml/pmd_report.xml"/>
+			<fileset dir="${src.java}">
+				<include name="**/*.java"/>
+			</fileset>
+		</pmd>
+		<cpd minimumTokenCount="10"
+				outputFile="${dist}/pmd/xml/cpd_report.xml"
+				format="xml" encoding="UTF-8">
+			<fileset dir="src">
+				<include name="**/*.java"/>
+			</fileset>
+		</cpd>
+		<xslt includes="cpd_report.xml" basedir="${dist}/pmd/xml"
+				destdir="${dist}/pmd/html" extension=".html"
+				style="${pmd.home}/etc/xslt/cpdhtml.xslt" >
+			<classpath>
+				<fileset dir="${xalan.home}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</xslt>
+		<xslt includes="pmd_report.xml" basedir="${dist}/pmd/xml"
+				destdir="${dist}/pmd/html" extension=".html"
+				style="${pmd.home}/etc/xslt/wz-pmd-report.xslt" >
+			<classpath>
+				<fileset dir="${xalan.home}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</xslt>
+	</target>
+	
+	<!-- ****************************************************************** -->
+	<target name="cs" depends="compile">
+		<mkdir dir="${dist}/checkstyle/xml"/>
+		<mkdir dir="${dist}/checkstyle/html"/>
+		
+	<cs:checkstyle config="${checkstyle.home}/${checkstyle.style}"
+			failOnViolation="false">
+		<fileset dir="${src.java}" includes="**/*.java"/>
+		<formatter type="xml"
+			toFile="${dist}/checkstyle/xml/checkstyle_errors.xml"/>
+	</cs:checkstyle>
+	
+		<xslt basedir="${dist}/checkstyle/xml"
+				destdir="${dist}/checkstyle/html" extension=".html"
+				style="${checkstyle.home}/contrib/checkstyle-frames.xsl">
+				<classpath>
+					<fileset dir="${xalan.home}">
+					<include name="*.jar"/>
+					</fileset>
+				</classpath>
+		</xslt>
+	</target>
+	<!-- ****************************************************************** -->
+	
+	<target name="quality" depends="compile-tests, cs, pmd, findbugs, run-tests">
+	</target>
+	
+	<target name="reports" depends="quality, javadoc">
+	</target>
+	
+</project>
